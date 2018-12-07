@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/f386f040-974e-46e4-b69d-6ea28231f055",
+  "id": "f386f040-974e-46e4-b69d-6ea28231f055",
+  "wmoCollectiveId": "ACUS01",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-03-28T12:47:00+00:00",
+  "productCode": "SWO",
+  "productName": "Severe Storm Outlook Narrative (AC)",
+  "productText": "\n379 \nACUS01 KWNS 281247\nSWODY1\nSPC AC 281246\n\nDay 1 Convective Outlook  \nNWS Storm Prediction Center Norman OK\n0746 AM CDT Wed Mar 28 2018\n\nValid 281300Z - 291200Z\n\n...THERE IS A SLIGHT RISK OF SEVERE THUNDERSTORMS THROUGH TONIGHT\nFROM SOUTH CENTRAL AND SOUTHEAST TX TO THE ARK-LA-MISS...\n\n...THERE IS A MARGINAL RISK OF SEVERE THUNDERSTORMS FROM SOUTH TX TO\nPARTS OF THE MID SOUTH...\n\n...SUMMARY...\nSevere thunderstorms with a few tornadoes, large hail and damaging\nwinds are possible today from parts of south and east Texas into\nparts of the Mid South.\n\n...South/southeast TX to the Mid South through tonight...\nThe effective cold front, reinforced by widespread overnight\nconvection, has stalled today from southeast TX into northern LA.  A\nweak wave is also expected to move northeastward along the front\nfrom just south of CLL this morning to northern LA by late this\nevening, in response to a midlevel trough ejecting\neast-northeastward over the southern Plains through tonight. \nLow-level mass response to the weak wave/ejecting midlevel trough\nwill result in some increase in low-level shear from southeast TX\ntoday to the Ark-La-Miss by early tonight.  Embedded surface-based\nsupercells and/or QLCS mesovortices will be possible within the\nconvective bands along or just south of the quasi-stationary front,\npotentially producing a few tornadoes in a moist environment with\neffective SRH in excess of 300 m2/s2.  Otherwise, the threat for\nlarge hail will be greater across south and southeast TX in\nproximity to the steeper midlevel lapse rates and where storms may\noccasionally remain more discrete.  A few damaging gusts will be\npossible along the convective bands, potentially as far northeast as\nnorthern MS and vicinity along the northeast edge of the weakly\nunstable surface warm sector into tonight.\n\n..Thompson/Picca.. 03/28/2018\n\n$$\n\n"
+}

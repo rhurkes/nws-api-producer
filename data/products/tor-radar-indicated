@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/8e9c22ee-a255-43ce-9143-17c723f9a1d1",
+  "id": "8e9c22ee-a255-43ce-9143-17c723f9a1d1",
+  "wmoCollectiveId": "WFUS53",
+  "issuingOffice": "KSGF",
+  "issuanceTime": "2018-04-14T00:09:00+00:00",
+  "productCode": "TOR",
+  "productName": "Tornado Warning",
+  "productText": "\n241 \nWFUS53 KSGF 140009\nTORSGF\nMOC067-229-140045-\n/O.NEW.KSGF.TO.W.0009.180414T0009Z-180414T0045Z/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nTornado Warning\nNational Weather Service Springfield MO\n709 PM CDT FRI APR 13 2018\n\nThe National Weather Service in Springfield has issued a\n\n* Tornado Warning for...\n  North central Douglas County in southwestern Missouri...\n  Southeastern Wright County in southwestern Missouri...\n\n* Until 745 PM CDT\n    \n* At 709 PM CDT, a severe thunderstorm capable of producing a tornado\n  was located near Mansfield, or 10 miles northeast of Ava, moving\n  northeast at 25 mph.\n\n  HAZARD...Tornado and ping pong ball size hail. \n\n  SOURCE...Radar indicated rotation. \n\n  IMPACT...Flying debris will be dangerous to those caught without \n           shelter. Mobile homes will be damaged or destroyed. \n           Damage to roofs, windows, and vehicles will occur.  Tree \n           damage is likely. \n\n* Locations impacted include...\n  Mountain Grove...                 Mansfield...\n  Norwood...                        \n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTAKE COVER NOW! Move to a basement or an interior room on the lowest\nfloor of a sturdy building. Avoid windows. If you are outdoors, in a\nmobile home, or in a vehicle, move to the closest substantial shelter\nand protect yourself from flying debris.\n\n&&\n\nLAT...LON 3700 9251 3706 9261 3724 9250 3723 9238\n      3712 9226\nTIME...MOT...LOC 0009Z 217DEG 22KT 3706 9254 \n\nTORNADO...RADAR INDICATED\nHAIL...1.50IN\n\n$$\n\nHatch\n\n"
+}

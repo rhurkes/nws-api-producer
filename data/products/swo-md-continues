@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/1deeeae9-fb8c-47d5-85d2-76365709fef3",
+  "id": "1deeeae9-fb8c-47d5-85d2-76365709fef3",
+  "wmoCollectiveId": "ACUS11",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-03-28T22:33:00+00:00",
+  "productCode": "SWO",
+  "productName": "Severe Storm Outlook Narrative (AC)",
+  "productText": "\n205 \nACUS11 KWNS 282233\nSWOMCD\nSPC MCD 282232 \nMSZ000-LAZ000-290030-\n\nMesoscale Discussion 0190\nNWS Storm Prediction Center Norman OK\n0532 PM CDT Wed Mar 28 2018\n\nAreas affected...West central through north central Mississippi and\nadjacent portions of Arkansas/Louisiana\n\nConcerning...Tornado Watch 23...\n\nValid 282232Z - 290030Z\n\nThe severe weather threat for Tornado Watch 23 continues.\n\nSUMMARY...A risk for thunderstorm activity capable of producing\ndamaging wind gusts and a couple of tornadoes will gradually spread\nacross and northeast of the Vicksburg MS area, toward Greenwood and\nTupelo, through 7-9 PM CDT.\n\nDISCUSSION...The risk for severe weather will gradually increase\nacross west central into north central Mississippi through the\n00-02Z time frame.  This will largely occur in association with the\nnortheastward migration of a weak wave along an effective warm\nfrontal zone/zone of enhanced low-level convergence.  Strengthening\nof southerly 850 mb flow to 40-50 kt appears likely to accompany\nthis feature.  This will contribute to enlarging low-level\nhodographs along the boundary, supportive of supercell structures\nwith a risk for potentially damaging wind gusts and perhaps a couple\nof tornadoes.  Northeast of the Vicksburg area, thermodynamic\nprofiles/instability still appears somewhat marginal, but this may\nchange during the next couple of hours with continued low-level\nmoistening.\n\n..Kerr.. 03/28/2018\n\n...Please see www.spc.noaa.gov for graphic product...\n\nATTN...WFO...MEG...JAN...\n\nLAT...LON   33189084 34139008 34498933 34078856 32918941 32209065\n            31669155 31719186 32459121 33180084 \n\n\n"
+}

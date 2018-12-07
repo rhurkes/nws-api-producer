@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/0aca47c0-62d3-4aa8-ad03-8db6cf165373",
+  "id": "0aca47c0-62d3-4aa8-ad03-8db6cf165373",
+  "wmoCollectiveId": "WGUS53",
+  "issuingOffice": "KGID",
+  "issuanceTime": "2018-05-02T01:52:00+00:00",
+  "productCode": "FFW",
+  "productName": "Flash Flood Warning",
+  "productText": "\n500 \nWGUS53 KGID 020152\nFFWGID\nKSC123-141-020545-\n/O.NEW.KGID.FF.W.0001.180502T0152Z-180502T0545Z/\n/00000.0.ER.000000T0000Z.000000T0000Z.000000T0000Z.OO/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nFlash Flood Warning\nNational Weather Service Hastings NE\n852 PM CDT TUE MAY 1 2018\n\nThe National Weather Service in Hastings has issued a\n\n* Flash Flood Warning for...\n  Mitchell County in north central Kansas...\n  Southeastern Osborne County in north central Kansas...\n\n* Until 1245 AM CDT\n\n* At 844 PM CDT, Doppler radar indicated thunderstorms producing\n  heavy rain across the warned area. Flash flooding is expected to \n  begin shortly. Three to five inches of rain have been estimated to \n  have already fallen for some areas, with potentially another \n  couple of inches of rain before ending Tuesday night.\n\n* Some locations that will experience flooding include...\n  Beloit, Tipton, Asherville, Simpson, Hunter and Victor and along \n  the Solomon River. \n\nLAT...LON 3935 9847 3953 9793 3922 9793 3922 9849\n      3913 9849 3913 9889\n\n$$\n\nHeinlein\n\n"
+}

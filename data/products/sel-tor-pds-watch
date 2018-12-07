@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/0571ce3b-7253-4f08-b777-a5bad535be7f",
+  "id": "0571ce3b-7253-4f08-b777-a5bad535be7f",
+  "wmoCollectiveId": "WWUS20",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-04-13T18:47:00+00:00",
+  "productCode": "SEL",
+  "productName": "Severe Local Storm Watch and Watch Cancellation Msg",
+  "productText": "\n136 \nWWUS20 KWNS 131847\nSEL0  \nSPC WW 131847\nARZ000-LAZ000-OKZ000-TXZ000-140300-\n\nURGENT - IMMEDIATE BROADCAST REQUESTED\nTornado Watch Number 40\nNWS Storm Prediction Center Norman OK\n150 PM CDT Fri Apr 13 2018\n\nThe NWS Storm Prediction Center has issued a\n\n* Tornado Watch for portions of \n  Much of Arkansas\n  Northwest Louisiana\n  Southeast Oklahoma\n  Northeast Texas\n\n* Effective this Friday afternoon and evening from 150 PM until\n  1000 PM CDT.\n\n...THIS IS A PARTICULARLY DANGEROUS SITUATION...\n\n* Primary threats include...\n  Numerous tornadoes expected with a few intense tornadoes likely\n  Widespread large hail and isolated very large hail events to 2.5\n    inches in diameter likely\n  Widespread damaging wind gusts to 70 mph likely\n\nSUMMARY...Intense thunderstorms are expected to track across the\nwatch area this afternoon and early evening, posing a risk of\ntornadoes, large hail and damaging winds.  Strong tornadoes are\npossible.  Multiple rounds of severe storms are expected across this\nregion.\n\nThe tornado watch area is approximately along and 70 statute miles\neast and west of a line from 70 miles south of Longview TX to 20\nmiles northeast of Flippin AR. For a complete depiction of the watch\nsee the associated watch outline update (WOUS64 KWNS WOU0).\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nREMEMBER...A Tornado Watch means conditions are favorable for\ntornadoes and severe thunderstorms in and close to the watch\narea. Persons in these areas should be on the lookout for\nthreatening weather conditions and listen for later statements\nand possible warnings.\n\n&&\n\nOTHER WATCH INFORMATION...CONTINUE...WW 39...\n\nAVIATION...Tornadoes and a few severe thunderstorms with hail\nsurface and aloft to 2.5 inches. Extreme turbulence and surface wind\ngusts to 60 knots. A few cumulonimbi with maximum tops to 500. Mean\nstorm motion vector 24035.\n\n...Hart\n\n"
+}

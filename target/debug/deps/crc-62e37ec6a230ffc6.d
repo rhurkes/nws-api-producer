@@ -1,0 +1,12 @@
+/Users/z002qqy/code/personal/nws-api-producer/target/debug/deps/libcrc-62e37ec6a230ffc6.rlib: /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/lib.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/crc16.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/crc32.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/crc64.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/util.rs /Users/z002qqy/code/personal/nws-api-producer/target/debug/build/crc-93b41eaf8a84ed08/out/crc16_constants.rs /Users/z002qqy/code/personal/nws-api-producer/target/debug/build/crc-93b41eaf8a84ed08/out/crc32_constants.rs /Users/z002qqy/code/personal/nws-api-producer/target/debug/build/crc-93b41eaf8a84ed08/out/crc64_constants.rs
+
+/Users/z002qqy/code/personal/nws-api-producer/target/debug/deps/crc-62e37ec6a230ffc6.d: /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/lib.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/crc16.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/crc32.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/crc64.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/util.rs /Users/z002qqy/code/personal/nws-api-producer/target/debug/build/crc-93b41eaf8a84ed08/out/crc16_constants.rs /Users/z002qqy/code/personal/nws-api-producer/target/debug/build/crc-93b41eaf8a84ed08/out/crc32_constants.rs /Users/z002qqy/code/personal/nws-api-producer/target/debug/build/crc-93b41eaf8a84ed08/out/crc64_constants.rs
+
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/lib.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/crc16.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/crc32.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/crc64.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/crc-1.8.1/src/util.rs:
+/Users/z002qqy/code/personal/nws-api-producer/target/debug/build/crc-93b41eaf8a84ed08/out/crc16_constants.rs:
+/Users/z002qqy/code/personal/nws-api-producer/target/debug/build/crc-93b41eaf8a84ed08/out/crc32_constants.rs:
+/Users/z002qqy/code/personal/nws-api-producer/target/debug/build/crc-93b41eaf8a84ed08/out/crc64_constants.rs:

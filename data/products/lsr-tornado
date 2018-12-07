@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/c566eb10-b853-4c3d-870f-63fb00778141",
+  "id": "c566eb10-b853-4c3d-870f-63fb00778141",
+  "wmoCollectiveId": "NWUS52",
+  "issuingOffice": "KMFL",
+  "issuanceTime": "2018-03-31T19:35:00+00:00",
+  "productCode": "LSR",
+  "productName": "Local Storm Report",
+  "productText": "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT...CORRECTED\nNATIONAL WEATHER SERVICE MIAMI FL\n335 PM EDT SAT MAR 31 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0300 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n03/31/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n&&\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n"
+}

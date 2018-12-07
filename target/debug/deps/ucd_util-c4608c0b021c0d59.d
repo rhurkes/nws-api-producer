@@ -1,0 +1,11 @@
+/Users/z002qqy/code/personal/nws-api-producer/target/debug/deps/libucd_util-c4608c0b021c0d59.rlib: /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/lib.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/hangul.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/ideograph.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/name.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/property.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/unicode_tables/mod.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/unicode_tables/jamo_short_name.rs
+
+/Users/z002qqy/code/personal/nws-api-producer/target/debug/deps/ucd_util-c4608c0b021c0d59.d: /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/lib.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/hangul.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/ideograph.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/name.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/property.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/unicode_tables/mod.rs /Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/unicode_tables/jamo_short_name.rs
+
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/lib.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/hangul.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/ideograph.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/name.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/property.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/unicode_tables/mod.rs:
+/Users/z002qqy/.cargo/registry/src/github.com-1ecc6299db9ec823/ucd-util-0.1.3/src/unicode_tables/jamo_short_name.rs:

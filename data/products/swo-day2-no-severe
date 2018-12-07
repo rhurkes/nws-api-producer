@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/3cd3877e-cb05-4576-88d5-9479d31e66f3",
+  "id": "3cd3877e-cb05-4576-88d5-9479d31e66f3",
+  "wmoCollectiveId": "ACUS02",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-03-31T17:14:00+00:00",
+  "productCode": "SWO",
+  "productName": "Severe Storm Outlook Narrative (AC)",
+  "productText": "\n452 \nACUS02 KWNS 311714\nSWODY2\nSPC AC 311714\n\nDay 2 Convective Outlook  \nNWS Storm Prediction Center Norman OK\n1214 PM CDT Sat Mar 31 2018\n\nValid 011200Z - 021200Z\n\n...NO SEVERE THUNDERSTORM AREAS FORECAST...\n\n...SUMMARY...\nIsolated thunderstorms may develop across parts of eastern Oklahoma\nto the Ozark Plateau and lower Tennessee Valley Sunday into Sunday\nnight.  Other storms may develop across the southern and central\nFlorida Peninsula on Sunday.\n\n...OK to Western TN...\n\nWeak surface wave is expected to develop along a pronounced cold\nfront over southeastern OK early in the period before translating\ninto the TN Valley Sunday evening. This feature will serve to delay\nsouthward advance of continental air mass across AR/TN, though the\nboundary should progress into the Arklatex region late in the\nperiod. In the absence of appreciable large-scale support for\nascent, weak low-level warm advection along the cool side of this\nboundary should serve as the focus for potential convective\ndevelopment during the period. Deep westerly flow regime may limit\nthunderstorm threat across the southern Plains as forecast soundings\nare strongly capped much of the period. For these reasons have\nlowered thunder probabilities west of I-35. Of some concern is the\nsteep mid-level lapse rate environment that will be shunted into far\neastern OK/Ozark Plateau region. Elevated buoyancy across this\nregion may be sufficient for hail with the strongest updrafts;\nhowever, hail sizes should remain mostly below severe levels and\nwill not introduce severe probs this period.\n\n...FL...\n\nWeak surface boundary may drift west across the southern Peninsula\nduring the day2 period with a north-south orientation interior at\npeak of heating. While forecast lapse rates will remain weak,\nadequate PW and forecast buoyancy suggest a few thunderstorms could\nform along the aforementioned boundary primarily during daylight\nhours.\n\n..Darrow.. 03/31/2018\n\n$$\n\n"
+}

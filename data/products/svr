@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/b323816c-f902-47c3-af42-c01fc14b0c66",
+  "id": "b323816c-f902-47c3-af42-c01fc14b0c66",
+  "wmoCollectiveId": "WUUS53",
+  "issuingOffice": "KDMX",
+  "issuanceTime": "2018-04-13T22:36:00+00:00",
+  "productCode": "SVR",
+  "productName": "Severe Thunderstorm Warning",
+  "productText": "\n601 \nWUUS53 KDMX 132236\nSVRDMX\nIAC027-073-132315-\n/O.NEW.KDMX.SV.W.0002.180413T2236Z-180413T2315Z/\n\nBULLETIN - IMMEDIATE BROADCAST REQUESTED\nSevere Thunderstorm Warning\nNational Weather Service Des Moines IA\n536 PM CDT FRI APR 13 2018\n\nThe National Weather Service in Des Moines  has issued a\n\n* Severe Thunderstorm Warning for...\n  Western Greene County in west central Iowa...\n  Eastern Carroll County in west central Iowa...\n\n* Until 615 PM CDT.\n\n* At 536 PM CDT, a severe thunderstorm was located 7 miles southeast\n  of Glidden, or 12 miles west of Jefferson, moving northeast at 30\n  mph.\n\n  HAZARD...60 mph wind gusts and quarter size hail. \n\n  SOURCE...Radar indicated. \n\n  IMPACT...Hail damage to vehicles is expected. Expect wind damage \n           to roofs, siding, and trees. \n\n* Locations impacted include...\n  Glidden, Scranton, Churdan, Lanesboro, Ralston and Hobbs County\n  Park.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nFor your protection move to an interior room on the lowest floor of a\nbuilding.\n\nTorrential rainfall is occurring with this storm, and may lead to\nflash flooding. Do not drive your vehicle through flooded roadways.\n\n&&\n\nLAT...LON 4221 9475 4221 9434 4191 9452 4191 9475\nTIME...MOT...LOC 2236Z 206DEG 24KT 4198 9462 \n\nHAIL...1.00IN\nWIND...60MPH\n \n$$\n\nMF\n\n"
+}

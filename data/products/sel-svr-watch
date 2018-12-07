@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/e4caace0-0bfb-40b2-bdff-4a94593035f8",
+  "id": "e4caace0-0bfb-40b2-bdff-4a94593035f8",
+  "wmoCollectiveId": "WWUS20",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-04-03T15:23:00+00:00",
+  "productCode": "SEL",
+  "productName": "Severe Local Storm Watch and Watch Cancellation Msg",
+  "productText": "\n727 \nWWUS20 KWNS 031523\nSEL5  \nSPC WW 031523\nARZ000-LAZ000-OKZ000-TXZ000-032300-\n\nURGENT - IMMEDIATE BROADCAST REQUESTED\nSevere Thunderstorm Watch Number 25\nNWS Storm Prediction Center Norman OK\n1025 AM CDT Tue Apr 3 2018\n\nThe NWS Storm Prediction Center has issued a\n\n* Severe Thunderstorm Watch for portions of \n  Southwest Arkansas\n  Northwest Louisiana\n  Southeast Oklahoma\n  Central and Northeast Texas\n\n* Effective this Tuesday morning and evening from 1025 AM until\n  600 PM CDT.\n\n* Primary threats include...\n  Scattered large hail likely with isolated very large hail events\n    to 2.5 inches in diameter possible\n  Scattered damaging wind gusts to 70 mph possible\n\nSUMMARY...Thunderstorms are intensifying over central Texas, and\nwill spread northeastward across the watch area through the\nafternoon.  Other storms will form along an approaching cold front. \nLarge hail and damaging winds will be possible in the strongest\ncells.\n\nThe severe thunderstorm watch area is approximately along and 75\nstatute miles north and south of a line from 50 miles west of Temple\nTX to 40 miles northeast of Shreveport LA. For a complete depiction\nof the watch see the associated watch outline update (WOUS64 KWNS\nWOU5).\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nREMEMBER...A Severe Thunderstorm Watch means conditions are\nfavorable for severe thunderstorms in and close to the watch area.\nPersons in these areas should be on the lookout for threatening\nweather conditions and listen for later statements and possible\nwarnings. Severe thunderstorms can and occasionally do produce\ntornadoes.\n\n&&\n\nAVIATION...A few severe thunderstorms with hail surface and aloft to\n2.5 inches. Extreme turbulence and surface wind gusts to 60 knots. A\nfew cumulonimbi with maximum tops to 500. Mean storm motion vector\n26030.\n\n...Hart\n\n"
+}

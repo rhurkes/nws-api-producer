@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/9e063b71-f9d1-496d-a4ac-a9a8e786c211",
+  "id": "9e063b71-f9d1-496d-a4ac-a9a8e786c211",
+  "wmoCollectiveId": "WWUS20",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-04-03T17:13:00+00:00",
+  "productCode": "SEL",
+  "productName": "Severe Local Storm Watch and Watch Cancellation Msg",
+  "productText": "\n281 \nWWUS20 KWNS 031713\nSEL6  \nSPC WW 031713\nINZ000-KYZ000-OHZ000-040000-\n\nURGENT - IMMEDIATE BROADCAST REQUESTED\nTornado Watch Number 26\nNWS Storm Prediction Center Norman OK\n115 PM EDT Tue Apr 3 2018\n\nThe NWS Storm Prediction Center has issued a\n\n* Tornado Watch for portions of \n  Southern and Central Indiana\n  Northern Kentucky\n  Western and Central Ohio\n\n* Effective this Tuesday afternoon and evening from 115 PM until\n  800 PM EDT.\n\n* Primary threats include...\n  A few tornadoes likely with a couple intense tornadoes possible\n  Scattered damaging wind gusts to 70 mph likely\n  Scattered large hail and isolated very large hail events to 2\n    inches in diameter possible\n\nSUMMARY...Thunderstorms are intensifying along the IL/IN border, and\nwill track eastward across the watch area through the afternoon. \nConditions appear favorable for supercell storms capable of large\nhail, damaging winds, and perhaps a strong tornado or two.\n\nThe tornado watch area is approximately along and 70 statute miles\nnorth and south of a line from 40 miles south southwest of Terre\nHaute IN to 20 miles south southeast of Columbus OH. For a complete\ndepiction of the watch see the associated watch outline update\n(WOUS64 KWNS WOU6).\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nREMEMBER...A Tornado Watch means conditions are favorable for\ntornadoes and severe thunderstorms in and close to the watch\narea. Persons in these areas should be on the lookout for\nthreatening weather conditions and listen for later statements\nand possible warnings.\n\n&&\n\nOTHER WATCH INFORMATION...CONTINUE...WW 25...\n\nAVIATION...Tornadoes and a few severe thunderstorms with hail\nsurface and aloft to 2 inches. Extreme turbulence and surface wind\ngusts to 60 knots. A few cumulonimbi with maximum tops to 450. Mean\nstorm motion vector 24035.\n\n...Hart\n\n"
+}

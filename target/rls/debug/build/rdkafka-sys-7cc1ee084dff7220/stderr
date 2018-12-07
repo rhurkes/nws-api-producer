@@ -1,0 +1,3 @@
+Building and linking librdkafka statically
+Running command: "./configure --disable-sasl --disable-ssl --disable-lz4 --enable-static" in dir: librdkafka
+Running command: "make -j 8 libs" in dir: librdkafka

@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/db8ea44c-e132-4f63-9e16-acacbf2c7c85",
+  "id": "db8ea44c-e132-4f63-9e16-acacbf2c7c85",
+  "wmoCollectiveId": "WWUS60",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-04-03T17:15:00+00:00",
+  "productCode": "SEV",
+  "productName": "SPC Watch Point Information Message",
+  "productText": "\n557 \nWWUS60 KWNS 031715\nSEVSPC\nFILE CREATED 03-APR-18 AT 17:15:01 UTC\nSEVR 180403 1525 WS0025 2300\n03214.09816 03356.09320 03146.09320 03003.09816;\n\nSEVR 180403 1715 WT0026 0000\n03955.08736 04044.08244 03843.08244 03754.08736;\n\n"
+}

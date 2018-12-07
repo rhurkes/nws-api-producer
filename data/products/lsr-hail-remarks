@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/ad531b4f-f96a-46c0-85de-bc79698bba50",
+  "id": "ad531b4f-f96a-46c0-85de-bc79698bba50",
+  "wmoCollectiveId": "NWUS54",
+  "issuingOffice": "KSJT",
+  "issuanceTime": "2018-03-27T01:16:00+00:00",
+  "productCode": "LSR",
+  "productName": "Local Storm Report",
+  "productText": "\n106 \nNWUS54 KSJT 270116\nLSRSJT\n\nPRELIMINARY LOCAL STORM REPORT\nNational Weather Service San Angelo Tx\n816 PM CDT MON MAR 26 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0755 PM     HAIL             1 E SILVER              32.07N 100.66W\n03/26/2018  E1.25 INCH       COKE               TX   STORM CHASER    \n\n            1.25 HAIL ON HWY 208 NEAR SILVER \n\n\n&&\n\nEVENT NUMBER SJT1800032\n\n$$\n\nSJT\n\n"
+}

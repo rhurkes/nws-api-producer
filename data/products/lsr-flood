@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/6af2bf57-eacf-4578-8bd7-5371beaea068",
+  "id": "6af2bf57-eacf-4578-8bd7-5371beaea068",
+  "wmoCollectiveId": "NWUS56",
+  "issuingOffice": "KOTX",
+  "issuanceTime": "2018-04-28T22:16:00+00:00",
+  "productCode": "LSR",
+  "productName": "Local Storm Report",
+  "productText": "\n547 \nNWUS56 KOTX 282216\nLSROTX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE SPOKANE WA\n316 PM PDT SAT APR 28 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n1233 PM     FLOOD            1 SW CURLEW             48.88N 118.61W\n04/28/2018                   FERRY              WA   LAW ENFORCEMENT  \n\n            ROAD WASHOUT ON STATE ROUTE 21 AT MP 181.5. \n            ROAD IS FULLY BLOCKED. \n\n\n&&\n\n$$\n\n\n\n\n"
+}

@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/9838d31f-2c01-4e07-8065-e3a270d3e75f",
+  "id": "9838d31f-2c01-4e07-8065-e3a270d3e75f",
+  "wmoCollectiveId": "ACUS01",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-03-31T19:35:00+00:00",
+  "productCode": "SWO",
+  "productName": "Severe Storm Outlook Narrative (AC)",
+  "productText": "\n931 \nACUS01 KWNS 311935\nSWODY1\nSPC AC 311934\n\nDay 1 Convective Outlook  \nNWS Storm Prediction Center Norman OK\n0234 PM CDT Sat Mar 31 2018\n\nValid 312000Z - 011200Z\n\n...NO SEVERE THUNDERSTORM AREAS FORECAST...\n\n...SUMMARY...\nThunderstorms are possible from southern Oklahoma across the Ozarks\nregion and over parts of the Florida Peninsula.\n\n...Discussion...\n\nNo changes to 1630z outlook are warranted.\n\n..Darrow.. 03/31/2018\n\n.PREV DISCUSSION... /ISSUED 1126 AM CDT Sat Mar 31 2018/\n\n...TX/OK into the Ozarks...\nA strong surface cold front is surging southward across KS, and will\nmove into parts of TX/OK/AR/MO later this evening.  Southerly\nlow-level winds ahead of the front will continue to moisten the\nregion, leading to a corridor of marginal CAPE values by late\nafternoon.  Virtually all 12z model guidance is consistent in the\ndevelopment of scattered showers and a few thunderstorms along/ahead\nof the front later today.  Shear profiles would be conditionally\nconducive for organized/rotating updrafts.  However, weak low-level\nconvergence/shear and some weak capping inversion are expected to\nlimit updraft strength and resultant severe risk.  One or two cells\nmay briefly approach severe limits producing hail, but the overall\nrisk appears to warrant a continuation of less-than-5% hail\nprobabilities at this time.\n\n$$\n\n"
+}

@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/bbaf04e2-b323-493e-8393-df5505c87404",
+  "id": "bbaf04e2-b323-493e-8393-df5505c87404",
+  "wmoCollectiveId": "WFUS54",
+  "issuingOffice": "KSHV",
+  "issuanceTime": "2018-04-13T23:50:00+00:00",
+  "productCode": "TOR",
+  "productName": "Tornado Warning",
+  "productText": "\n823 \nWFUS54 KSHV 132350\nTORSHV\nARC061-133-140030-\n/O.NEW.KSHV.TO.W.0059.180413T2350Z-180414T0030Z/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nTornado Warning\nNational Weather Service Shreveport LA\n650 PM CDT FRI APR 13 2018\n\nThe National Weather Service in Shreveport has issued a\n\n* Tornado Warning for...\n  Northeastern Sevier County in southwestern Arkansas...\n  Northern Howard County in southwestern Arkansas...\n\n* Until 730 PM CDT\n\n* At 650 PM CDT, a confirmed tornado was located near Lockesburg, or\n  near De Queen, moving northeast at 35 mph.\n\n  HAZARD...Damaging tornado. \n\n  SOURCE...Weather spotters confirmed tornado. \n\n  IMPACT...Flying debris will be dangerous to those caught without \n           shelter. Mobile homes will be damaged or destroyed. \n           Damage to roofs, windows, and vehicles will occur.  Tree \n           damage is likely. \n\n* The tornado will be near...\n  Dierks around 715 PM CDT. \n  Umpire around 725 PM CDT. \n  Athens around 730 PM CDT. \n\nOther locations impacted by this tornadic thunderstorm include\nLebanon, Geneva, Provo and Burg.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTo repeat, a tornado is on the ground. TAKE COVER NOW! Move to a\nbasement or an interior room on the lowest floor of a sturdy\nbuilding. Avoid windows. If you are outdoors, in a mobile home, or in\na vehicle, move to the closest substantial shelter and protect\nyourself from flying debris.\n\n&&\n\nLAT...LON 3426 9392 3419 9392 3419 9388 3418 9388\n      3394 9423 3400 9432 3435 9407\nTIME...MOT...LOC 2350Z 219DEG 31KT 3399 9426 \n\nTORNADO...OBSERVED\nHAIL...<.75IN\n\n$$\n\n35\n\n"
+}

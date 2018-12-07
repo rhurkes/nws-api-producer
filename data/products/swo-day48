@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/c8e745d9-e054-4888-95e5-b4013afd5443",
+  "id": "c8e745d9-e054-4888-95e5-b4013afd5443",
+  "wmoCollectiveId": "ACUS48",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-03-31T09:06:00+00:00",
+  "productCode": "SWO",
+  "productName": "Severe Storm Outlook Narrative (AC)",
+  "productText": "\n499 \nACUS48 KWNS 310906\nSWOD48\nSPC AC 310905\n\nDay 4-8 Convective Outlook  \nNWS Storm Prediction Center Norman OK\n0405 AM CDT Sat Mar 31 2018\n\nValid 031200Z - 081200Z\n\n...DISCUSSION...\nD4/Tuesday - Medium range models are in general agreement with the\ntiming of a southern-stream trough to move across central/eastern\nparts of TX/OK by peak heating on Tuesday.  A moist, moderately\nunstable and strongly sheared warm sector will be conducive for\norganized severe storms to develop initially in vicinity of a\ndryline with supercells likely.  A cold front advancing quickly\nsouth Tuesday evening toward the northwest Gulf Coast will continue\nto support a threat for severe storms associated with a potential\nsquall line.\n\nD5/Wednesday - The cold front advances south through the Gulf Basin\non D5, shunting moisture/instability well south, precluding a\nsevere-weather threat across the contiguous United States.\n\nD6/Thursday - The ECMWF/GFS differ with the eastward movement of the\nnext southern-stream trough to move into the southern Plains.  The\nGFS is faster, and thus results in a quicker moisture return\nscenario prior to the arrival of forcing for ascent that would\nsupport thunderstorm development along a dryline/cold front in\nacross parts of OK/TX.  Despite timing uncertainties with the\nmidlevel trough, the GFS suggests instability should be weak ahead\nof the faster system, resulting in a low potential for eventual\nintroduction of a 15% severe probability.\n\nD7/Friday - Although the ECMWF/GFS agree in sufficient moisture\nreturn and development of strong instability across parts of TX to\nthe lower Mississippi Valley on Friday ahead of the next cold front,\ntiming difference with the D6 trough continues into D7.  This\nresults in the predictability being too low to introduce a\nsevere-weather threat area.\n\nD8/Saturday - Similar to D5, the D7 cold front will move into the\nGulf Basin limiting a severe-weather threat inland on Saturday.\n\n..Peters.. 03/31/2018\n\n"
+}

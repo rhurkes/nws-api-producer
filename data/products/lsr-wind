@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/0386b179-a75f-4e74-9774-9175d5fc47bd",
+  "id": "0386b179-a75f-4e74-9774-9175d5fc47bd",
+  "wmoCollectiveId": "NWUS54",
+  "issuingOffice": "KFWD",
+  "issuanceTime": "2018-03-27T01:31:00+00:00",
+  "productCode": "LSR",
+  "productName": "Local Storm Report",
+  "productText": "\n230 \nNWUS54 KFWD 270131\nLSRFWD\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE FORT WORTH TX\n830 PM CDT MON MAR 26 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0700 PM     TSTM WND DMG     1 N CRAFTON             33.36N  97.90W\n03/26/2018                   WISE               TX   TRAINED SPOTTER \n\n            TREES UP TO 12\" DIAMETER DOWN ON CR-1875 & ROOF DAMAGE \n            ON FM-2127  \n\n$$\n\n"
+}

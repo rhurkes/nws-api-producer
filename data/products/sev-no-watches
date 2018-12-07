@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/8110870e-288f-49ab-a48a-0ee235835785",
+  "id": "8110870e-288f-49ab-a48a-0ee235835785",
+  "wmoCollectiveId": "WWUS60",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-05-01T04:00:00+00:00",
+  "productCode": "SEV",
+  "productName": "SPC Watch Point Information Message",
+  "productText": "\n000\nWWUS60 KWNS 010400\nSEVSPC\nFILE CREATED 01-MAY-18 AT 04:00:01 UTC\nNO WATCHES CURRENTLY ACTIVE\n"
+}

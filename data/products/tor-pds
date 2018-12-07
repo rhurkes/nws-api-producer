@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/4086e7c2-2e39-4549-9050-f6980ff4d093",
+  "id": "4086e7c2-2e39-4549-9050-f6980ff4d093",
+  "wmoCollectiveId": "WFUS53",
+  "issuingOffice": "KTOP",
+  "issuanceTime": "2018-05-02T01:01:00+00:00",
+  "productCode": "TOR",
+  "productName": "Tornado Warning",
+  "productText": "\n271 \nWFUS53 KTOP 020101\nTORTOP\nKSC027-161-201-020145-\n/O.NEW.KTOP.TO.W.0009.180502T0101Z-180502T0145Z/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nTornado Warning\nNational Weather Service Topeka KS\n801 PM CDT TUE MAY 1 2018\n\nThe National Weather Service in Topeka has issued a\n\n* Tornado Warning for...\n  Northwestern Riley County in northeastern Kansas...\n  Southern Washington County in north central Kansas...\n  Northern Clay County in north central Kansas...\n\n* Until 845 PM CDT\n    \n* At 800 PM CDT, a large and extremely dangerous tornado was located\n  2 miles south of Clifton, moving northeast at 25 mph.\n\n  This is a PARTICULARLY DANGEROUS SITUATION. TAKE COVER NOW! \n\n  HAZARD...Damaging tornado. \n\n  SOURCE...Radar indicated rotation. \n\n  IMPACT...You are in a life-threatening situation. Flying debris \n           may be deadly to those caught without shelter. Mobile \n           homes will be destroyed. Considerable damage to homes, \n           businesses, and vehicles is likely and complete \n           destruction is possible. \n\n* The tornado will be near...\n  Morganville around 805 PM CDT. \n  Palmer around 820 PM CDT. \n  Linn around 830 PM CDT. \n  Greenleaf around 845 PM CDT. \n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTo repeat, a large, extremely dangerous and potentially deadly\ntornado is developing. To protect your life, TAKE COVER NOW! Move to\na basement or an interior room on the lowest floor of a sturdy\nbuilding. Avoid windows. If you are outdoors, in a mobile home, or in\na vehicle, move to the closest substantial shelter and protect\nyourself from flying debris.\n\nTornadoes are extremely difficult to see and confirm at night. Do not\nwait to see or hear the tornado. TAKE COVER NOW!\n\n&&\n\nLAT...LON 3977 9697 3950 9680 3939 9737 3959 9737\nTIME...MOT...LOC 0100Z 245DEG 24KT 3952 9728 \n\nTORNADO...RADAR INDICATED\nTORNADO DAMAGE THREAT...CONSIDERABLE\nHAIL...2.00IN\n\n$$\n\nBaerg\n\n"
+}

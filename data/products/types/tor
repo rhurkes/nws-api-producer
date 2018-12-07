@@ -1,0 +1,34 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@graph": [
+        {
+            "@id": "https://api.weather.gov/products/8e9c22ee-a255-43ce-9143-17c723f9a1d1",
+            "id": "8e9c22ee-a255-43ce-9143-17c723f9a1d1",
+            "wmoCollectiveId": "WFUS53",
+            "issuingOffice": "KSGF",
+            "issuanceTime": "2018-04-14T00:09:00+00:00",
+            "productCode": "TOR",
+            "productName": "Tornado Warning"
+        },
+        {
+            "@id": "https://api.weather.gov/products/b6de5b59-b304-403a-9c41-8e20d98273d2",
+            "id": "b6de5b59-b304-403a-9c41-8e20d98273d2",
+            "wmoCollectiveId": "WFUS54",
+            "issuingOffice": "KJAN",
+            "issuanceTime": "2018-04-14T00:24:00+00:00",
+            "productCode": "TOR",
+            "productName": "Tornado Warning"
+        },
+        {
+            "@id": "https://api.weather.gov/products/bbaf04e2-b323-493e-8393-df5505c87404",
+            "id": "bbaf04e2-b323-493e-8393-df5505c87404",
+            "wmoCollectiveId": "WFUS54",
+            "issuingOffice": "KSHV",
+            "issuanceTime": "2018-04-13T23:50:00+00:00",
+            "productCode": "TOR",
+            "productName": "Tornado Warning"
+        }
+    ]
+}

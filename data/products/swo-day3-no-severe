@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/a4c0b03a-0b40-49d1-9d8b-14f37f38feb3",
+  "id": "a4c0b03a-0b40-49d1-9d8b-14f37f38feb3",
+  "wmoCollectiveId": "ACUS03",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-03-29T07:08:00+00:00",
+  "productCode": "SWO",
+  "productName": "Severe Storm Outlook Narrative (AC)",
+  "productText": "\n905 \nACUS03 KWNS 290708\nSWODY3\nSPC AC 290707\n\nDay 3 Convective Outlook  \nNWS Storm Prediction Center Norman OK\n0207 AM CDT Thu Mar 29 2018\n\nValid 311200Z - 011200Z\n\n...NO SEVERE THUNDERSTORM AREAS FORECAST...\n\n...SUMMARY...\nIsolated thunderstorms are possible across portions of the southern\nPlains and Ozark Plateau as well as across the southern Florida\nPeninsula.\n\n...Synopsis...\nShortwave trough initially over the upper MS Valley is expected to\ncontinue eastward through the upper Great Lakes before pivoting\nnortheastward in Quebec late in the period. Surface low associated\nwith this shortwave will take a similar path. Strong cold front\nattendant to this low will sweep southward/southeastward across the\ncentral/southern Plains, and mid MS and OH Valleys. Isolated\nthunderstorms are possible ahead of this front from north TX through\nthe Ozark Plateau. Isolated thunderstorms are also possible across\nthe southern FL Peninsula near a decaying frontal zone.\n\n...Northwest TX northeastward into the Ozark Plateau...\nSome modest moisture return is possible ahead of this front across\nthe southern Plains, with mid 50s dewpoints likely reaching as far\nnorth as northeast OK. This rather limited moisture return along\nwith warm mid-level temperatures, will mitigate overall instability.\nEven so, strong forcing for ascent is anticipated along the front\n(with possible augmentation of the lift by a subtle shortwave trough\nexpected to move into OK around 00Z Sunday), which will support\nisolated thunderstorms as it encounters the better low-level\nmoisture. Long hodographs are noted within the guidance, which could\nsupport rotation and hail production within the most persistent\nupdrafts. However, current expectation is for updraft persistence to\nbe severely limited by scant instability and a quickly advancing\nfront. Severe probabilities may be needed in subsequent outlooks if\nbetter low-level moisture return (and resulting stronger\ninstability) becomes more likely.\n\n..Mosier.. 03/29/2018\n\n$$\n\n"
+}

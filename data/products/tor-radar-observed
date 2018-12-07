@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/b6de5b59-b304-403a-9c41-8e20d98273d2",
+  "id": "b6de5b59-b304-403a-9c41-8e20d98273d2",
+  "wmoCollectiveId": "WFUS54",
+  "issuingOffice": "KJAN",
+  "issuanceTime": "2018-04-14T00:24:00+00:00",
+  "productCode": "TOR",
+  "productName": "Tornado Warning",
+  "productText": "\n679 \nWFUS54 KJAN 140024\nTORJAN\nLAC067-140130-\n/O.NEW.KJAN.TO.W.0027.180414T0024Z-180414T0130Z/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nTornado Warning\nNational Weather Service Jackson MS\n724 PM CDT FRI APR 13 2018\n\nThe National Weather Service in Jackson has issued a\n\n* Tornado Warning for...\n  Northwestern Morehouse Parish in northeastern Louisiana...\n\n* Until 830 PM CDT\n         \n* At 724 PM CDT, a confirmed tornado was located 12 miles north of\n  Sterlington, or 13 miles south of Huttig, moving northeast at 30\n  mph.\n\n  HAZARD...Damaging tornado and quarter size hail. \n\n  SOURCE...Radar confirmed tornado. \n\n  IMPACT...Flying debris will be dangerous to those caught without \n           shelter. Mobile homes will be damaged or destroyed. \n           Damage to roofs, windows, and vehicles will occur.  Tree \n           damage is likely. \n\n* This tornadic thunderstorm will remain over mainly rural areas of\n  northwestern Morehouse Parish.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTo repeat, a tornado is on the ground. TAKE COVER NOW! Move to a\nbasement or an interior room on the lowest floor of a sturdy\nbuilding. Avoid windows. If you are outdoors, in a mobile home, or in\na vehicle, move to the closest substantial shelter and protect\nyourself from flying debris.\n\n&&\n\nLAT...LON 3298 9208 3299 9207 3301 9207 3301 9184\n      3282 9206 3283 9207 3284 9206 3285 9206\n      3287 9208 3293 9207 3296 9208\nTIME...MOT...LOC 0024Z 213DEG 24KT 3286 9212 \n\nTORNADO...OBSERVED\nHAIL...1.00IN\n\n$$\n\n19\n\n"
+}

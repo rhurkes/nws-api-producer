@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/892dd63c-8f92-4cfe-b21e-a6a688537445",
+  "id": "892dd63c-8f92-4cfe-b21e-a6a688537445",
+  "wmoCollectiveId": "ACUS11",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-04-03T16:41:00+00:00",
+  "productCode": "SWO",
+  "productName": "Severe Storm Outlook Narrative (AC)",
+  "productText": "\n504 \nACUS11 KWNS 031641\nSWOMCD\nSPC MCD 031641 \nOHZ000-KYZ000-INZ000-ILZ000-031915-\n\nMesoscale Discussion 0205\nNWS Storm Prediction Center Norman OK\n1141 AM CDT Tue Apr 03 2018\n\nAreas affected...Central and southern Indiana...far northern\nKentucky...western Ohio\n\nConcerning...Severe potential...Tornado Watch likely \n\nValid 031641Z - 031915Z\n\nProbability of Watch Issuance...95 percent\n\nSUMMARY...Storms are expected to increase in intensity this\nafternoon with a few tornadoes possible along with large hail.\nAdditional severe storms are likely later this evening.\n\nDISCUSSION...Scattered storms persist from southern IL across\ncentral IN and into OH along and north of a warm front. This\nboundary will gradually shift northward due to boundary layer\nheating/mixing to the south and strengthening warm air advection via\na backing 50-60 kt low-level jet. While some of the activity is\ncurrently elevated, a transition may occur in a few hours allowing\nstorms along the warm front to become supercells and/or bows.\nAdditional storms may also form south of the warm front as the air\nmass continues to destabilize, most likely across southern IN, far\nnorthern KY, and southwest OH. Wind profiles will become\nincreasingly favorable for supercells and tornadoes throughout the\nday as the low deepens.\n\n..Jewell/Hart.. 04/03/2018\n\n...Please see www.spc.noaa.gov for graphic product...\n\nATTN...WFO...ILN...LMK...IWX...IND...PAH...ILX...\n\nLAT...LON   37828769 38538776 39738706 40628525 40468356 40368310\n            40128274 39658275 39248339 38808423 38208503 37818597\n            37738630 37648721 37828769 \n\n\n"
+}

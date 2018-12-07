@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/2bb02cc4-9e69-4236-bcac-66a12248daa5",
+  "id": "2bb02cc4-9e69-4236-bcac-66a12248daa5",
+  "wmoCollectiveId": "NWUS56",
+  "issuingOffice": "KSGX",
+  "issuanceTime": "2018-04-29T03:08:00+00:00",
+  "productCode": "LSR",
+  "productName": "Local Storm Report",
+  "productText": "\n000\nNWUS56 KSGX 290308\nLSRSGX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE SAN DIEGO CA\n808 PM PDT SAT APR 28 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0230 PM     WILDFIRE         1 NNE LAKE ELSINORE     33.68N 117.32W\n04/28/2018                   RIVERSIDE          CA   FIRE DEPT/RESCUE \n\n            THE MAIN FIRE STARTED AROUND 2:30 PM NEAR \n            THE INTERSECTION OF MAIN ST. AND INTERSTATE \n            15. THE FIRE WAS 75 ACRES AND 75% CONTAINED \n            AS OF 8 PM. \n\n\n&&\n\n$$\n\nALBRIGHT\n\n\n166 \nNWUS56 KSGX 290308\nLSRSGX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE SAN DIEGO CA\n808 PM PDT SAT APR 28 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0230 PM     WILDFIRE         1 NNE LAKE ELSINORE     33.68N 117.32W\n04/28/2018                   RIVERSIDE          CA   FIRE DEPT/RESCUE \n\n            THE MAIN FIRE STARTED AROUND 2:30 PM NEAR \n            THE INTERSECTION OF MAIN ST. AND INTERSTATE \n            15. THE FIRE WAS 75 ACRES AND 75% CONTAINED \n            AS OF 8 PM. \n\n\n&&\n\n$$\n\nALBRIGHT\n\n\n"
+}
