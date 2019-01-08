@@ -1,1 +1,0 @@
-{"rustc":374411238313605966,"features":"[\"default\"]","target":4944179213620976468,"profile":11870183705523825133,"path":14908599388906699626,"deps":[["num_cpus v0.2.13","num_cpus",18281349699992203144],["pkg-config v0.3.14","pkg_config",2865095614597252525]],"local":[{"Precalculated":"0.11.4-0"}],"rustflags":[],"edition":"Edition2015"}

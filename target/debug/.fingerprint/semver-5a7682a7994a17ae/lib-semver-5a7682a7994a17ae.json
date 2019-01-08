@@ -1,1 +1,0 @@
-{"rustc":374411238313605966,"features":"[\"default\"]","target":11637645323780128689,"profile":11870183705523825133,"path":782004250322288312,"deps":[["semver-parser v0.7.0","semver_parser",838300546207399955]],"local":[{"Precalculated":"0.9.0"}],"rustflags":[],"edition":"Edition2015"}

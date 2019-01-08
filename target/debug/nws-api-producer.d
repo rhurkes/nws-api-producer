@@ -1,1 +1,0 @@
-/Users/z002qqy/code/personal/nws-api-producer/target/debug/nws-api-producer.dSYM: /Users/z002qqy/code/personal/nws-api-producer/src/domain.rs /Users/z002qqy/code/personal/nws-api-producer/src/main.rs /Users/z002qqy/code/personal/nws-api-producer/src/util.rs

@@ -8,7 +8,7 @@ mod util;
 mod parser;
 mod products;
 
-use self::domain::{Context, Product, ProductsResult};
+use self::domain::{Context, ListProduct, Product, ProductsResult};
 use self::products::{TornadoProduct};
 use self::util::{Config, KafkaProducer, Logger};
 use std::sync::Arc;
@@ -78,8 +78,8 @@ pub struct WorkDefinition<'a> {
     // pub work: fn(&str, &str, &Config, &Client) -> ()
 }
 
-fn get_new_products(last_ts: u64, products_result: ProductsResult) -> Vec<Product> {
-    let mut new_products: Vec<Product> = vec![];
+fn get_new_products(last_ts: u64, products_result: ProductsResult) -> Vec<ListProduct> {
+    let mut new_products: Vec<ListProduct> = vec![];
 
     for product in products_result.products {
         if let Ok(ticks) = util::ts_to_ticks(&product.issuance_time) {

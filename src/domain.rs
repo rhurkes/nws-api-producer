@@ -4,7 +4,7 @@ use reqwest::Client;
 const EVENT_SOURCE: &str = "nws_api";
 const DATA_TYPE: &str = "TODO";
 
-#[derive(Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct WxEventMessage<'a> {
     pub src: &'a str,
     #[serde(skip)]
@@ -12,7 +12,7 @@ pub struct WxEventMessage<'a> {
     pub event_ts: u64,
     pub ingest_ts: u64,
     pub data: String,
-    pub data_type: &'a str,
+    pub data_type: String,
 }
 
 impl<'a> WxEventMessage<'a> {
@@ -23,7 +23,7 @@ impl<'a> WxEventMessage<'a> {
             event_ts,
             ingest_ts: util::get_system_millis(),
             data: "".to_string(), //serde_json::to_string(data).unwrap(),
-            data_type: DATA_TYPE,
+            data_type: DATA_TYPE.to_string(),
         }
     }
 }
@@ -43,7 +43,7 @@ pub struct ProductsResult {
     #[serde(rename = "@context")]
     pub _context: Context,
     #[serde(rename = "@graph")]
-    pub products: Vec<Product>,
+    pub products: Vec<ListProduct>,
 }
 
 #[derive(Deserialize)]
@@ -53,7 +53,7 @@ pub struct Context {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct Product {
+pub struct ListProduct {
     #[serde(rename = "@id")]
     _id: String,
     pub id: String,
@@ -67,7 +67,23 @@ pub struct Product {
     pub product_code: String,
     #[serde(rename = "productName")]
     product_name: String,
-    #[serde(default)]
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Product {
+    #[serde(rename = "@id")]
+    pub _id: String,
+    pub id: String,
+    #[serde(rename = "wmoCollectiveId")]
+    pub wmo_collective_id: String,
+    #[serde(rename = "issuingOffice")]
+    pub issuing_office: String,
+    #[serde(rename = "issuanceTime")]
+    pub issuance_time: String,
+    #[serde(rename = "productCode")]
+    pub product_code: String,
+    #[serde(rename = "productName")]
+    pub product_name: String,
     #[serde(rename = "productText")]
-    pub product_text: Option<String>,
+    pub product_text: String,
 }
