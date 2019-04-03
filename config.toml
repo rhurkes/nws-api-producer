@@ -3,5 +3,5 @@ topic_name = "wx_events"
 consumer_id = "nws_api_producer"
 api_host = "https://api.weather.gov"
 poll_interval_ms = 60_000
-age_limit_min = 120
+age_limit_min = 30
 user_agent = "sigtor.org"

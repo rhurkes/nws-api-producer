@@ -1,0 +1,13 @@
+{
+  @context: {
+    @vocab: "https://api.weather.gov/ontology#"
+  },
+  @id: "https://api.weather.gov/products/920f275c-dc32-4dae-a221-45e52d5f3875",
+  id: "920f275c-dc32-4dae-a221-45e52d5f3875",
+  wmoCollectiveId: "NWUS52",
+  issuingOffice: "KCHS",
+  issuanceTime: "2019-03-03T23:44:00+00:00",
+  productCode: "LSR",
+  productName: "Local Storm Report",
+  productText: " 000 NWUS52 KCHS 032344 LSRCHS PRELIMINARY LOCAL STORM REPORT NATIONAL WEATHER SERVICE CHARLESTON SC 644 PM EST SUN MAR 03 2019 ..TIME... ...EVENT... ...CITY LOCATION... ...LAT.LON... ..DATE... ....MAG.... ..COUNTY LOCATION..ST.. ...SOURCE.... ..REMARKS.. 0629 PM LIGHTNING 2 NW ALLENHURST 31.80N 81.63W 03/03/2019 LIBERTY GA 911 CALL CENTER LIGHTNING STARTED A HOUSE FIRE. && EVENT NUMBER CHS1900081 $$ 99 "
+}

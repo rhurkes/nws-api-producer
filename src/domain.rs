@@ -1,44 +1,4 @@
-use super::util;
-use reqwest::Client;
-
-const EVENT_SOURCE: &str = "nws_api";
-const DATA_TYPE: &str = "TODO";
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct WxEventMessage<'a> {
-    pub src: &'a str,
-    #[serde(skip)]
-    pub key: String,
-    pub event_ts: u64,
-    pub ingest_ts: u64,
-    pub data: String,
-    pub data_type: String,
-}
-
-impl<'a> WxEventMessage<'a> {
-    pub fn new(event_ts: u64) -> WxEventMessage<'a> {
-        WxEventMessage {
-            src: EVENT_SOURCE,
-            key: get_event_key(event_ts),
-            event_ts,
-            ingest_ts: util::get_system_millis(),
-            data: "".to_string(), //serde_json::to_string(data).unwrap(),
-            data_type: DATA_TYPE.to_string(),
-        }
-    }
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-pub struct Coordinates {
-    pub lat: f32,
-    pub lon: f32,
-}
-
-fn get_event_key(event_ts: u64) -> String {
-    format!("nws-{}-{}", event_ts, "TODO")
-}
-
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct ProductsResult {
     #[serde(rename = "@context")]
     pub _context: Context,
@@ -46,16 +6,16 @@ pub struct ProductsResult {
     pub products: Vec<ListProduct>,
 }
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct Context {
     #[serde(rename = "@vocab")]
     pub _vocab: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ListProduct {
     #[serde(rename = "@id")]
-    _id: String,
+    pub _id: String,
     pub id: String,
     #[serde(rename = "wmoCollectiveId")]
     wmo_collective_id: String,
@@ -69,7 +29,7 @@ pub struct ListProduct {
     product_name: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Product {
     #[serde(rename = "@id")]
     pub _id: String,

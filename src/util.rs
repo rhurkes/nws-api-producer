@@ -1,36 +1,8 @@
-use chrono::prelude::*;
-use rdkafka::config::ClientConfig;
-use rdkafka::producer::{BaseProducer, BaseRecord};
 use reqwest::Client;
 use serde::de::DeserializeOwned;
-use slog::Drain;
 use std::fs::File;
 use std::io::{ErrorKind, Read};
-use std::ops::Deref;
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
-
-pub struct Logger {
-    pub instance: slog::Logger,
-}
-
-impl Logger {
-    pub fn new() -> Logger {
-        let decorator = slog_term::TermDecorator::new().build();
-        let drain = slog_term::FullFormat::new(decorator).build().fuse();
-        let drain = slog_async::Async::new(drain).build().fuse();
-
-        Logger {
-            instance: slog::Logger::root(drain, o!()),
-        }
-    }
-}
-
-impl Deref for Logger {
-    type Target = slog::Logger;
-    fn deref(&self) -> &Self::Target {
-        &self.instance
-    }
-}
+use wx::util::Logger;
 
 #[derive(Deserialize, Serialize)]
 pub struct Config {
@@ -65,51 +37,6 @@ impl Config {
     }
 }
 
-pub struct KafkaProducer<'a> {
-    pub logger: &'a Logger,
-    pub producer: BaseProducer,
-    pub topic_name: &'a str,
-}
-
-impl<'a> KafkaProducer<'a> {
-    pub fn new(logger: &'a Logger, config: &'a Config) -> KafkaProducer<'a> {
-        let producer: BaseProducer = ClientConfig::new()
-            .set("group.id", &config.consumer_id)
-            .set("bootstrap.servers", &config.broker_list)
-            .create()
-            .expect("producer creation error");
-
-        KafkaProducer {
-            logger,
-            producer,
-            topic_name: &config.topic_name,
-        }
-    }
-
-    pub fn write_to_topic(&self, message: &str, key: &str) {
-        self.producer
-            .send(BaseRecord::to(&self.topic_name).payload(message).key(key))
-            .unwrap();
-
-        if self.producer.poll(Duration::from_millis(5000)) == 0 {
-            warn!(self.logger, "kafka write not acked within threshold"; "topic" => self.topic_name, "msg" => message );
-        }
-    }
-}
-
-pub fn get_system_millis() -> u64 {
-    let start = SystemTime::now();
-    let since_the_epoch = start.duration_since(UNIX_EPOCH).unwrap();
-    since_the_epoch.as_secs() * 1000 + u64::from(since_the_epoch.subsec_nanos()) / 1_000_000
-}
-
-pub fn ts_to_ticks(input: &str) -> Result<u64, Box<std::error::Error>> {
-    Ok(Utc
-        .datetime_from_str(input, "%Y-%m-%dT%H:%M:%S+00:00")?
-        .timestamp() as u64
-        * 1000)
-}
-
 pub struct Fetcher<'a> {
     pub client: &'a Client,
     pub config: &'a Config,
@@ -126,7 +53,8 @@ impl<'a> Fetcher<'a> {
     }
 
     pub fn fetch<T: DeserializeOwned>(&self, url: &str) -> Result<T, Box<std::error::Error>> {
-        let mut response = self.client
+        let mut response = self
+            .client
             .get(url)
             .header(reqwest::header::USER_AGENT, self.config.user_agent.as_str())
             .send()?;
@@ -144,17 +72,5 @@ impl<'a> Fetcher<'a> {
         let result: T = serde_json::from_str(&body)?;
 
         Ok(result)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn ts_to_ticks_should_return_ticks() {
-        let ts = "2018-11-25T22:46:00+00:00";
-        let result = ts_to_ticks(&ts);
-        assert!(result.unwrap() == 1543185960000);
     }
 }
