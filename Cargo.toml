@@ -1,5 +1,5 @@
 [package]
-name = "nws-api-loader"
+name = "wx-nwsapi-loader"
 version = "0.1.0"
 authors = ["Rob Hurkes <rhurkes@gmail.com>"]
 edition = "2018"
@@ -15,5 +15,4 @@ slog = "2.4"
 slog-async = "2.3"
 slog-term = "2.4"
 toml = "0.4"
-# wx = { git = "https://github.com/rhurkes/wx_shared" }
-wx = { path = "../wx_shared", version = "0.1.5" }
+wx = { git = "https://github.com/rhurkes/wx_shared" }
