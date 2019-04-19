@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/5bfb5c42-fbf4-4727-8447-9f0aef3bde52",
+    "id": "5bfb5c42-fbf4-4727-8447-9f0aef3bde52",
+    "wmoCollectiveId": "NWUS51",
+    "issuingOffice": "KPBZ",
+    "issuanceTime": "2019-04-17T10:43:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS51 KPBZ 171043\nLSRPBZ\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE PITTSBURGH PA\n643 AM EDT WED APR 17 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0549 PM     TORNADO          4 WSW DOVER             40.50N  81.55W\n04/14/2019                   TUSCARAWAS         OH   NWS STORM SURVEY\n\n            EF0 TORNADO CONFIRMED. A 100 YEAR OLD BARN WAS \n            DESTROYED ALONG WITH SEVERAL LARGE LIMBS FROM HARDWOOD \n            TREES WERE BROUGHT DOWN. \n\n\n&&\n\nEVENT NUMBER PBZ1902053\n\n$$\n\n98\n\n\n"
+}

@@ -18,6 +18,10 @@ use std::time::Duration;
 use wx::domain::Event;
 use wx::util::Logger;
 
+// TODO hook this back up
+// TODO get list of products to parse
+// TODO thread for each request
+
 const APP_NAME: &str = "nws_api_loader";
 
 fn main() {
@@ -39,7 +43,6 @@ fn main() {
         threads.push(thread::spawn(move || {
             let client = reqwest::Client::new();
             let fetcher = util::Fetcher::new(&client, &config, &logger);
-            let parser = parser::RegexParser::new();
             let mut last_product_ts = wx::util::get_system_millis() - age_limit_ms;
 
             loop {

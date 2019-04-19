@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/e5d8408d-caa0-41e0-97db-18d2bcb8b05d",
+    "id": "e5d8408d-caa0-41e0-97db-18d2bcb8b05d",
+    "wmoCollectiveId": "NWUS51",
+    "issuingOffice": "KLWX",
+    "issuanceTime": "2019-04-15T06:55:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS51 KLWX 150655\nLSRLWX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE BALTIMORE MD/WASHINGTON DC\n255 AM EDT MON APR 15 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0248 AM     MARINE TSTM WIND POINT LOOKOUT           38.04N  76.32W\n04/15/2019  M52 MPH          ANZ537             MD   BUOY            \n\n\n&&\n\nEVENT NUMBER LWX1904092\n\n$$\n\nHTS\n\n\n"
+}

@@ -21,17 +21,7 @@ impl Config {
         let mut contents = String::new();
         f.read_to_string(&mut contents)
             .expect("something went wrong reading the file");
-        let mut config: Config = toml::from_str(&contents).expect("unable to parse config");
-
-        // let api_url_env = env::var("NWS_API_URL");
-        // if api_url_env.is_ok() {
-        //     config.api_url = api_url_env.unwrap();
-        // }
-
-        // let poll_interval_ms_env = env::var("NWS_POLL_INTERVAL_MS");
-        // if poll_interval_ms_env.is_ok() {
-        //     config.poll_interval_ms = poll_interval_ms_env.unwrap().parse().unwrap();
-        // }
+        let config: Config = toml::from_str(&contents).expect("unable to parse config");
 
         config
     }

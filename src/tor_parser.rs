@@ -1,42 +1,44 @@
 use super::domain::Product;
-use chrono::prelude::*;
-use super::parser::{cap, get_parse_error, short_time_to_ticks, str_to_latlon};
-use wx::domain::{Coordinates, Event, EventType, HazardType, Location, Report, Units, Warning};
-use wx::error::{Error, WxError};
+use super::parser::{cap, get_parse_error, short_time_to_ticks, str_to_latlon, Regexes};
+use wx::domain::{Coordinates, Event, EventType, Location, Warning};
+use wx::error::Error;
 use wx::util;
 
-pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
+pub fn parse(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error> {
     let text = &product.product_text;
-    let movement = self
-        .movement_regex
+    let movement = regexes
+        .movement
         .captures(&text)
-        .ok_or(get_parse_error(&text))?;
-    let description = self
-        .description_regex
+        .ok_or_else(|| get_parse_error(&text))?;
+    let description = regexes
+        .description
         .captures(&text)
-        .ok_or(get_parse_error(&text))?;
-    let poly = self
-        .polygon_regex
+        .ok_or_else(|| get_parse_error(&text))?;
+    let poly = regexes
+        .polygon
         .captures(&text)
-        .ok_or(get_parse_error(&text))?;
-    let source = self
-        .source_regex
+        .ok_or_else(|| get_parse_error(&text))?;
+    let source = regexes
+        .source
         .captures(&text)
-        .ok_or(get_parse_error(&text))?;
+        .ok_or_else(|| get_parse_error(&text))?;
     let lat = str_to_latlon(cap(movement.name("lat")), false);
     let lon = str_to_latlon(cap(movement.name("lon")), true);
     let poly = cap(poly.name("poly"));
-    let valid_range = self
-        .valid_regex
+    let valid_range = regexes
+        .valid
         .captures(&text)
-        .ok_or(get_parse_error(&text))?;
-    let issued_for = self
-        .issued_for_regex
+        .ok_or_else(|| get_parse_error(&text))?;
+    let issued_for = regexes
+        .issued_for
         .captures(&text)
-        .ok_or(get_parse_error(&text))?;
+        .ok_or_else(|| get_parse_error(&text))?;
     let issued_for = cap(issued_for.name("for")).replace("\n", "");
     let issued_for = issued_for.trim().to_string();
-    let summary = cap(description.name("desc")).to_string();
+    let text = cap(description.name("desc"))
+        .to_string()
+        .replace("\n", "")
+        .replace("  ", " ");
 
     let poly = vec![
         Coordinates {
@@ -69,10 +71,12 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
         poly: Some(poly),
     });
 
+    let lower_case_text = text.to_lowercase();
+
     let warning = Some(Warning {
-        is_pds: text.contains("particularly dangerous situation"),
-        was_observed: text.contains("tornado...observed"),
-        is_tor_emergency: text.contains("tornado emergency"),
+        is_pds: lower_case_text.contains("particularly dangerous situation"),
+        was_observed: lower_case_text.contains("tornado...observed"),
+        is_tor_emergency: lower_case_text.contains("tornado emergency"),
         motion_deg: cap(movement.name("deg")).parse::<u16>()?,
         motion_kt: cap(movement.name("kt")).parse::<u16>()?,
         source: cap(source.name("src")).to_string(),
@@ -91,8 +95,7 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
         md: None,
         outlook: None,
         report: None,
-        summary,
-        text: None,
+        text: Some(text),
         title,
         valid_ts,
         warning,
@@ -107,8 +110,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn parse_tor_product() {
-        let parser = RegexParser::new();
+    fn parse_tor_product_happy_path() {
         let mut product = Product{
             _id: "_id".to_string(),
             id: "id".to_string(),
@@ -117,12 +119,33 @@ mod tests {
             product_code: "TOR".to_string(),
             product_name: "Tornado Warning".to_string(),
             wmo_collective_id: "WFUS53".to_string(),
-            product_text: "\n271 \nWFUS53 KTOP 020101\nTORTOP\nKSC027-161-201-020145-\n/O.NEW.KTOP.TO.W.0009.180502T0101Z-180502T0145Z/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nTornado Warning\nNational Weather Service Topeka KS\n801 PM CDT TUE MAY 1 2018\n\nThe National Weather Service in Topeka has issued a\n\n* Tornado Warning for...\n  Northwestern Riley County in northeastern Kansas...\n  Southern Washington County in north central Kansas...\n  Northern Clay County in north central Kansas...\n\n* Until 845 PM CDT\n    \n* At 800 PM CDT, a large and extremely dangerous tornado was located\n  2 miles south of Clifton, moving northeast at 25 mph.\n\n  This is a PARTICULARLY DANGEROUS SITUATION. TAKE COVER NOW! \n\n  HAZARD...Damaging tornado. \n\n  SOURCE...Radar indicated rotation. \n\n  IMPACT...You are in a life-threatening situation. Flying debris \n           may be deadly to those caught without shelter. Mobile \n           homes will be destroyed. Considerable damage to homes, \n           businesses, and vehicles is likely and complete \n           destruction is possible. \n\n* The tornado will be near...\n  Morganville around 805 PM CDT. \n  Palmer around 820 PM CDT. \n  Linn around 830 PM CDT. \n  Greenleaf around 845 PM CDT. \n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTo repeat, a large, extremely dangerous and potentially deadly\ntornado is developing. To protect your life, TAKE COVER NOW! Move to\na basement or an interior room on the lowest floor of a sturdy\nbuilding. Avoid windows. If you are outdoors, in a mobile home, or in\na vehicle, move to the closest substantial shelter and protect\nyourself from flying debris.\n\nTornadoes are extremely difficult to see and confirm at night. Do not\nwait to see or hear the tornado. TAKE COVER NOW!\n\n&&\n\nLAT...LON 3977 9697 3950 9680 3939 9737 3959 9737\nTIME...MOT...LOC 0100Z 245DEG 24KT 3952 9728 \n\nTORNADO...RADAR INDICATED\nTORNADO DAMAGE THREAT...CONSIDERABLE\nHAIL...2.00IN\n\n$$\n\nBaerg\n\n".to_string(),
+            product_text: "\n271 \nWFUS53 KTOP 020101\nTORTOP\nKSC027-161-201-020145-\n/O.NEW.KTOP.TO.W.0009.180502T0101Z-180502T0145Z/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nTornado Warning\nNational Weather Service Topeka KS\n801 PM CDT TUE MAY 1 2018\n\nThe National Weather Service in Topeka has issued a\n\n* Tornado Warning for...\n  Northwestern Riley County in northeastern Kansas...\n  Southern Washington County in north central Kansas...\n  Northern Clay County in north central Kansas...\n\n* Until 845 PM CDT\n    \n* At 800 PM CDT, a large and extremely dangerous tornado was located\n  2 miles south of Clifton, moving northeast at 25 mph.\n\n  TAKE COVER NOW! \n\n  HAZARD...Damaging tornado. \n\n  SOURCE...Radar indicated rotation. \n\n  IMPACT...You are in a life-threatening situation. Flying debris \n           may be deadly to those caught without shelter. Mobile \n           homes will be destroyed. Considerable damage to homes, \n           businesses, and vehicles is likely and complete \n           destruction is possible. \n\n* The tornado will be near...\n  Morganville around 805 PM CDT. \n  Palmer around 820 PM CDT. \n  Linn around 830 PM CDT. \n  Greenleaf around 845 PM CDT. \n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTo repeat, a large, extremely dangerous and potentially deadly\ntornado is developing. To protect your life, TAKE COVER NOW! Move to\na basement or an interior room on the lowest floor of a sturdy\nbuilding. Avoid windows. If you are outdoors, in a mobile home, or in\na vehicle, move to the closest substantial shelter and protect\nyourself from flying debris.\n\nTornadoes are extremely difficult to see and confirm at night. Do not\nwait to see or hear the tornado. TAKE COVER NOW!\n\n&&\n\nLAT...LON 3977 9697 3950 9680 3939 9737 3959 9737\nTIME...MOT...LOC 0100Z 245DEG 24KT 3952 9728 \n\nTORNADO...RADAR INDICATED\nTORNADO DAMAGE THREAT...CONSIDERABLE\nHAIL...2.00IN\n\n$$\n\nBaerg\n\n".to_string(),
         };
 
-        let result = parser.parse(&mut product).unwrap();
+        let regexes = Regexes::new();
+        let result = parse(&mut product, regexes).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = "{\"event_ts\":1525222860000,\"event_type\":\"NwsTor\",\"expires_ts\":1525225500000,\"fetch_status\":null,\"image_uri\":null,\"ingest_ts\":0,\"location\":{\"wfo\":\"KTOP\",\"point\":{\"lat\":39.52,\"lon\":-97.28},\"poly\":[{\"lat\":39.77,\"lon\":-96.97},{\"lat\":39.5,\"lon\":-96.8},{\"lat\":39.39,\"lon\":-97.37},{\"lat\":39.59,\"lon\":-97.37}]},\"md\":null,\"outlook\":null,\"report\":null,\"summary\":\"At 800 PM CDT, a large and extremely dangerous tornado was located\\n  2 miles south of Clifton, moving northeast at 25 mph.\",\"text\":null,\"title\":\"KTOP issues tornado warning\",\"valid_ts\":1525222860000,\"warning\":{\"is_pds\":false,\"is_tor_emergency\":false,\"was_observed\":false,\"issued_for\":\"Northwestern Riley County in northeastern Kansas...  Southern Washington County in north central Kansas...  Northern Clay County in north central Kansas...\",\"motion_deg\":245,\"motion_kt\":24,\"source\":\"Radar indicated rotation\",\"time\":\"0100Z\"},\"watch\":null}";
+        let expected = r#"{"event_ts":1525222860000000,"event_type":"NwsTor","expires_ts":1525225500000000,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KTOP","point":{"lat":39.52,"lon":-97.28},"poly":[{"lat":39.77,"lon":-96.97},{"lat":39.5,"lon":-96.8},{"lat":39.39,"lon":-97.37},{"lat":39.59,"lon":-97.37}]},"md":null,"outlook":null,"report":null,"text":"At 800 PM CDT, a large and extremely dangerous tornado was located 2 miles south of Clifton, moving northeast at 25 mph.","title":"KTOP issues tornado warning","valid_ts":1525222860000000,"warning":{"is_pds":false,"is_tor_emergency":false,"was_observed":false,"issued_for":"Northwestern Riley County in northeastern Kansas...  Southern Washington County in north central Kansas...  Northern Clay County in north central Kansas...","motion_deg":245,"motion_kt":24,"source":"Radar indicated rotation","time":"0100Z"},"watch":null}"#;
+        assert!(serialized_result == expected);
+    }
+
+    #[test]
+    fn parse_tor_product_non_default_fields() {
+        let mut product = Product{
+            _id: "_id".to_string(),
+            id: "id".to_string(),
+            issuance_time: "2018-05-02T01:01:00+00:00".to_string(),
+            issuing_office: "KTOP".to_string(),
+            product_code: "TOR".to_string(),
+            product_name: "Tornado Warning".to_string(),
+            wmo_collective_id: "WFUS53".to_string(),
+            product_text: "\n271 \nWFUS53 KTOP 020101\nTORTOP\nKSC027-161-201-020145-\n/O.NEW.KTOP.TO.W.0009.180502T0101Z-180502T0145Z/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nTornado Warning\nNational Weather Service Topeka KS\n801 PM CDT TUE MAY 1 2018\n\nThe National Weather Service in Topeka has issued a\n\n* Tornado Warning for...\n  Northwestern Riley County in northeastern Kansas...\n  Southern Washington County in north central Kansas...\n  Northern Clay County in north central Kansas...\n\n* Until 845 PM CDT\n    \n* At 800 PM CDT, a large and extremely dangerous tornado was located\n  2 miles south of Clifton, moving northeast at 25 mph.\n\n  THIS IS A TORNADO EMERGENCY FOR CLIFTON. \n\n This is a PARTICULARLY DANGEROUS SITUATION. TAKE COVER NOW! \n\n  HAZARD...Damaging tornado. \n\n  SOURCE...Radar indicated rotation. \n\n  IMPACT...You are in a life-threatening situation. Flying debris \n           may be deadly to those caught without shelter. Mobile \n           homes will be destroyed. Considerable damage to homes, \n           businesses, and vehicles is likely and complete \n           destruction is possible. \n\n* The tornado will be near...\n  Morganville around 805 PM CDT. \n  Palmer around 820 PM CDT. \n  Linn around 830 PM CDT. \n  Greenleaf around 845 PM CDT. \n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTo repeat, a large, extremely dangerous and potentially deadly\ntornado is developing. To protect your life, TAKE COVER NOW! Move to\na basement or an interior room on the lowest floor of a sturdy\nbuilding. Avoid windows. If you are outdoors, in a mobile home, or in\na vehicle, move to the closest substantial shelter and protect\nyourself from flying debris.\n\nTornadoes are extremely difficult to see and confirm at night. Do not\nwait to see or hear the tornado. TAKE COVER NOW!\n\n&&\n\nLAT...LON 3977 9697 3950 9680 3939 9737 3959 9737\nTIME...MOT...LOC 0100Z 245DEG 24KT 3952 9728 \n\nTORNADO...OBSERVED\nTORNADO DAMAGE THREAT...CONSIDERABLE\nHAIL...2.00IN\n\n$$\n\nBaerg\n\n".to_string(),
+        };
+
+        let regexes = Regexes::new();
+        let result = parse(&mut product, regexes).unwrap();
+        let serialized_result = serde_json::to_string(&result).unwrap();
+        let expected = r#"{"event_ts":1525222860000000,"event_type":"NwsTor","expires_ts":1525225500000000,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KTOP","point":{"lat":39.52,"lon":-97.28},"poly":[{"lat":39.77,"lon":-96.97},{"lat":39.5,"lon":-96.8},{"lat":39.39,"lon":-97.37},{"lat":39.59,"lon":-97.37}]},"md":null,"outlook":null,"report":null,"text":"At 800 PM CDT, a large and extremely dangerous tornado was located 2 miles south of Clifton, moving northeast at 25 mph.","title":"KTOP issues tornado warning","valid_ts":1525222860000000,"warning":{"is_pds":false,"is_tor_emergency":false,"was_observed":false,"issued_for":"Northwestern Riley County in northeastern Kansas...  Southern Washington County in north central Kansas...  Northern Clay County in north central Kansas...","motion_deg":245,"motion_kt":24,"source":"Radar indicated rotation","time":"0100Z"},"watch":null}"#;
         assert!(serialized_result == expected);
     }
 }

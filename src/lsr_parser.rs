@@ -4,8 +4,11 @@ use wx::domain::{Coordinates, Event, EventType, HazardType, Location, Report, Un
 use wx::error::{Error, WxError};
 use wx::util;
 
+// TODO implement all lsr types
+
 const AGE_THRESHOLD_MICROS: u64 = 60 * 60 * 1000 * 1000;
 
+// An intermediary structure for an LSR to make parsing easier
 struct Skeleton<'a> {
     top_line: &'a str,
     bottom_line: &'a str,
@@ -18,15 +21,18 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
     let lsr = get_skeleton(&product.product_text)?;
     let event_ts = util::ts_to_ticks(&product.issuance_time)?;
     let raw_ts = lsr.bottom_line.get(0..10).unwrap().to_string() + lsr.top_line.get(0..7).unwrap();
-    let offset: Vec<&str> = lsr.lines[7].split(" ").collect(); // is this always the date line? TODO
-    let offset = offset.get(2).unwrap();
-    let offset = util::tz_to_offset(offset)?;
+    let offset: Vec<&str> = lsr.lines[7].split(' ').collect(); // is this always the date line? TODO
+    let offset = util::tz_to_offset(offset[2])?;
     let raw_ts = raw_ts + offset;
     let report_ts = get_report_ticks(&raw_ts)?;
 
-    // Report ts should be before event ts, but strange things happen
-    if report_ts > event_ts || event_ts - report_ts > AGE_THRESHOLD_MICROS {
-        return Ok(None); // Skip reports 1hr in the past
+    // Skip reports too far in the past, especially since these can come hours, days, or even months later
+    if event_ts - report_ts > AGE_THRESHOLD_MICROS {
+        return Ok(None);
+    }
+
+    if report_ts > event_ts {
+        // TODO log warning - report ts should be before event ts, but strange things happen
     }
 
     let raw_point = lsr.top_line.get(53..).unwrap().replace("W", "");
@@ -38,12 +44,12 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
         lon,
     });
 
-    // Summary can span multiple lines and have 12 consecutive spaces embedded
-    let mut summary = "".to_string();
+    // Summary can span multiple lines and will have 12 consecutive spaces embedded
+    let mut text = "".to_string();
     for i in (lsr.remarks_index + 5)..lsr.end_index {
-        summary = summary + lsr.lines[i as usize];
+        text += lsr.lines[i as usize];
     }
-    let summary = summary.replace("            ", "").trim().to_string();
+    let text = text.replace("            ", "").trim().to_string();
 
     let wfo = &product.issuing_office;
     let raw_hazard = lsr.top_line.get(12..29).unwrap().trim();
@@ -54,9 +60,9 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
     let raw_mag = lsr.bottom_line.get(12..29).unwrap().trim();
     let mut title = wfo.to_string() + " reports";
 
-    if raw_mag.len() > 0 {
+    if !raw_mag.is_empty() {
         was_measured = Some(raw_mag.get(0..1).unwrap() == "M");
-        let space_index = raw_mag.find(" ").unwrap();
+        let space_index = raw_mag.find(' ').unwrap();
         if raw_mag.contains("MPH") {
             units = Some(Units::Mph);
             magnitude = Some(raw_mag.get(1..space_index).unwrap().parse().unwrap());
@@ -89,14 +95,15 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
         was_measured,
     };
 
-    let mut event = Event::new(event_ts, EventType::NwsLsr, summary, title);
+    let mut event = Event::new(event_ts, EventType::NwsLsr, title);
     event.location = Some(location);
     event.report = Some(report);
+    event.text = Some(text);
 
     Ok(Some(event))
 }
 
-fn get_skeleton<'a>(text: &'a str) -> Result<Skeleton, Error> {
+fn get_skeleton(text: &str) -> Result<Skeleton, Error> {
     let lines: Vec<&str> = text.lines().collect();
 
     if lines.len() < 16 {
@@ -227,7 +234,7 @@ mod tests {
     }
 
     #[test]
-    fn parse_happy_path_tornado() {
+    fn parse_tornado_report() {
         let mut product = Product {
             _id: "_id".to_string(),
             id: "id".to_string(),
@@ -241,7 +248,7 @@ mod tests {
 
         let result = parse(&mut product).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = "{\"event_ts\":1525219680000000,\"event_type\":\"NwsLsr\",\"expires_ts\":null,\"fetch_status\":null,\"image_uri\":null,\"ingest_ts\":0,\"location\":{\"wfo\":\"KTOP\",\"point\":{\"lat\":26.8,\"lon\":-80.64},\"poly\":null},\"md\":null,\"outlook\":null,\"report\":{\"reporter\":\"TRAINED SPOTTER\",\"hazard\":\"Tornado\",\"magnitude\":null,\"units\":null,\"was_measured\":null,\"report_ts\":1525219200000000},\"summary\":\"TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. RECLASSIFIED AS A TORNADO.\",\"text\":null,\"title\":\"KTOP reports Tornado\",\"valid_ts\":null,\"warning\":null,\"watch\":null}";
+        let expected = r#"{"event_ts":1525219680000000,"event_type":"NwsLsr","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KTOP","point":{"lat":26.8,"lon":-80.64},"poly":null},"md":null,"outlook":null,"report":{"reporter":"TRAINED SPOTTER","hazard":"Tornado","magnitude":null,"units":null,"was_measured":null,"report_ts":1525219200000000},"text":"TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. RECLASSIFIED AS A TORNADO.","title":"KTOP reports Tornado","valid_ts":null,"warning":null,"watch":null}"#;
         assert!(serialized_result == expected);
     }
 
@@ -264,7 +271,24 @@ mod tests {
 
     // TODO get wind LSR, check existing wind vs wind dmg
     #[test]
-    fn parse_wind_report() {
+    fn parse_wind_speed_report() {
+        let mut product = Product {
+            _id: "_id".to_string(),
+            id: "id".to_string(),
+            issuance_time: "2018-05-02T00:08:00+00:00".to_string(),
+            issuing_office: "KTOP".to_string(),
+            product_code: "LSR".to_string(),
+            product_name: "Local Storm Report".to_string(),
+            wmo_collective_id: "WFUS53".to_string(),
+            product_text: "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT...CORRECTED\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0700 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n05/01/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n&&\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n".to_string(),
+        };
+
+        let result = parse(&mut product).unwrap();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn parse_wind_damage_report() {
         let mut product = Product {
             _id: "_id".to_string(),
             id: "id".to_string(),
@@ -295,7 +319,7 @@ mod tests {
 
         let result = parse(&mut product).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = "{\"event_ts\":1522185480000000,\"event_type\":\"NwsLsr\",\"expires_ts\":null,\"fetch_status\":null,\"image_uri\":null,\"ingest_ts\":0,\"location\":{\"wfo\":\"KSJT\",\"point\":{\"lat\":32.07,\"lon\":-100.66},\"poly\":null},\"md\":null,\"outlook\":null,\"report\":{\"reporter\":\"STORM CHASER\",\"hazard\":\"Hail\",\"magnitude\":1.25,\"units\":\"Inches\",\"was_measured\":false,\"report_ts\":1522185360000000},\"summary\":\"1.25 HAIL ON HWY 208 NEAR SILVER\",\"text\":null,\"title\":\"KSJT reports 1.25 INCH Hail\",\"valid_ts\":null,\"warning\":null,\"watch\":null}";
+        let expected = r#"{"event_ts":1522185480000000,"event_type":"NwsLsr","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KSJT","point":{"lat":32.07,"lon":-100.66},"poly":null},"md":null,"outlook":null,"report":{"reporter":"STORM CHASER","hazard":"Hail","magnitude":1.25,"units":"Inches","was_measured":false,"report_ts":1522185360000000},"text":"1.25 HAIL ON HWY 208 NEAR SILVER","title":"KSJT reports 1.25 INCH Hail","valid_ts":null,"warning":null,"watch":null}"#;
         assert_eq!(serialized_result, expected);
     }
 }
