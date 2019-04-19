@@ -4,6 +4,7 @@ use wx::domain::{Coordinates, Event, EventType, HazardType, Location, Report, Un
 use wx::error::{Error, WxError};
 use wx::util;
 
+// TODO do I want to handle corrected LSRs?
 // TODO implement all lsr types
 
 const AGE_THRESHOLD_MICROS: u64 = 60 * 60 * 1000 * 1000;
