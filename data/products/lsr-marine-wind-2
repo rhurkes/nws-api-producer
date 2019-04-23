@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/10044275-50cf-461b-88c2-2fe0d0d0b343",
+    "id": "10044275-50cf-461b-88c2-2fe0d0d0b343",
+    "wmoCollectiveId": "NWUS52",
+    "issuingOffice": "KILM",
+    "issuanceTime": "2019-04-15T23:47:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS52 KILM 152347\nLSRILM\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE WILMINGTON NC\n746 PM EDT MON APR 15 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0408 AM     MARINE TSTM WIND 27 SE WRIGHTSVILLE BCH  33.99N  77.36W\n04/15/2019  M49 MPH          AMZ270             NC   BUOY            \n\n            NDBC BUOY 41037 - WILMINGTON BUOY - REPORTED WIND GUST \n            OF 42.7 KTS AT 4:08AM AS LINE OF STORMS MOVED THROUGH \n            THE AREA. \n\n\n&&\n\nEVENT NUMBER ILM1900002\n\n$$\n\nOLIVA\n\n\n"
+}

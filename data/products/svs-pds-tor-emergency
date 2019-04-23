@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/a3735cd5-7080-49c8-b63e-8cbfcefbee55",
+  "id": "a3735cd5-7080-49c8-b63e-8cbfcefbee55",
+  "wmoCollectiveId": "WWUS53",
+  "issuingOffice": "KTOP",
+  "issuanceTime": "2018-05-02T01:08:00+00:00",
+  "productCode": "SVS",
+  "productName": "Severe Weather Statement",
+  "productText": "\n211 \nWWUS53 KTOP 020108\nSVSTOP\n\nSevere Weather Statement\nNational Weather Service Topeka KS\n808 PM CDT TUE MAY 1 2018\n\nKSC143-020130-\n/O.CON.KTOP.TO.W.0008.000000T0000Z-180502T0130Z/\nOttawa-\n808 PM CDT TUE MAY 1 2018\n\n...A TORNADO EMERGENCY REMAINS IN EFFECT UNTIL 830 PM CDT FOR\nSOUTHEASTERN OTTAWA COUNTY...\n    \nAt 807 PM CDT, a confirmed extremely dangerous tornado was located 4 \nmiles south of Minneapolis, moving northeast at 30 mph. An \nadditional tornado may be forming 5 miles NW of Bennington.\n\nThis is a PARTICULARLY DANGEROUS SITUATION. TAKE COVER NOW!\n\nHAZARD...Damaging tornado. \n\nSOURCE...Law enforcement confirmed tornado. \n\nIMPACT...You are in a life-threatening situation. Flying debris may \n         be deadly to those caught without shelter. Mobile homes \n         will be destroyed. Considerable damage to homes, \n         businesses, and vehicles is likely and complete destruction \n         is possible. \n\nThe tornado will be near...\n  Bennington around 815 PM CDT. \n  Wells around 825 PM CDT. \n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nHeavy rainfall may hide this tornado. Do not wait to see or hear the\ntornado. TAKE COVER NOW!\n\nTornadoes are extremely difficult to see and confirm at night. Do not\nwait to see or hear the tornado. TAKE COVER NOW!\n\n&&\n\nLAT...LON 3926 9748 3897 9738 3897 9773 3910 9783\nTIME...MOT...LOC 0107Z 244DEG 27KT 3906 9769 \n\nTORNADO...OBSERVED\nTORNADO DAMAGE THREAT...CONSIDERABLE\nHAIL...2.00IN\n\n$$\n\nSkow\n\n"
+}

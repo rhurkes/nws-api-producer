@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/bb57711f-4400-4fd6-9503-d742aee5352a",
+    "id": "bb57711f-4400-4fd6-9503-d742aee5352a",
+    "wmoCollectiveId": "NWUS54",
+    "issuingOffice": "KJAN",
+    "issuanceTime": "2019-04-17T03:17:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS54 KJAN 170317\nLSRJAN\n\nPRELIMINARY LOCAL STORM REPORT...CORRECTED\nNATIONAL WEATHER SERVICE JACKSON MS\n1017 PM CDT TUE APR 16 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0504 PM     TSTM WND DMG     3 SSW VICKSBURG         32.31N 90.90W\n04/13/2019                   WARREN             MS   AMATEUR RADIO    \n\n            CORRECTS PREVIOUS TSTM WND DMG REPORT FROM 3 \n            SSW VICKSBURG. WARRENTON ROAD WAS BLOCKED BY \n            DOWNED TREES. \n\n\n&&\n\n$$\n\nNF\n\n"
+}

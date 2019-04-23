@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/a32f39c5-f764-4296-9f89-e136f2bc61e7",
+    "id": "a32f39c5-f764-4296-9f89-e136f2bc61e7",
+    "wmoCollectiveId": "NWUS55",
+    "issuingOffice": "KPIH",
+    "issuanceTime": "2019-04-16T18:50:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS55 KPIH 161850\nLSRPIH\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE POCATELLO ID\n1250 PM MDT TUE APR 16 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n1045 AM     HEAVY RAIN       FRANKLIN                42.01N 111.81W\n04/16/2019  M0.55 INCH       FRANKLIN           ID   MESONET          \n\n            MESONET STATION ITD04 FRANKLIN. \n\n1021 AM     HEAVY RAIN       6 E ROY                 42.37N 112.71W\n04/16/2019  M0.54 INCH       POWER              ID   MESONET          \n\n            MESONET STATION DPKI1 BULL CANYON. \n\n1015 AM     HEAVY RAIN       4 W LAVA HOT SPRINGS    42.63N 112.09W\n04/16/2019  M0.52 INCH       BANNOCK            ID   MESONET          \n\n            MESONET STATION TOPI1 PORTNEUF RIVER. \n\n\n&&\n\n$$\n\n\n\n"
+}

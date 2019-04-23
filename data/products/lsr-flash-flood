@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/1ae2e9a8-74bf-4c80-a621-e1df839927a1",
+    "id": "1ae2e9a8-74bf-4c80-a621-e1df839927a1",
+    "wmoCollectiveId": "NWUS53",
+    "issuingOffice": "KMPX",
+    "issuanceTime": "2019-04-17T18:29:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS53 KMPX 171829\nLSRMPX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE TWIN CITIES/CHANHASSEN MN\n129 PM CDT WED APR 17 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n1250 PM     FLASH FLOOD      NORTHFIELD              44.46N 93.16W\n04/17/2019                   RICE               MN   EMERGENCY MNGR   \n\n            FLOWING WATER OVER ROADWAYS IN AND AROUND \n            NORTHFIELD, INTERSECTIONS FLOODED UP TO KNEE \n            DEEP. \n\n\n&&\n\n$$\n\nCCS\n\n"
+}

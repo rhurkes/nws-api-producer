@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/65856e50-de4f-41d5-9179-6d8a516551ca",
+    "id": "65856e50-de4f-41d5-9179-6d8a516551ca",
+    "wmoCollectiveId": "NWUS56",
+    "issuingOffice": "KHNX",
+    "issuanceTime": "2019-04-16T22:44:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS56 KHNX 162244\nLSRHNX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE HANFORD CA\n344 PM PDT TUE APR 16 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0200 PM     NON-TSTM WND GST 2 ENE MOJAVE            35.07N 118.15W\n04/16/2019  M61 MPH          KERN               CA   AWOS             \n\n            AWOS STATION KMHV MOJAVE AIRPORT. \n\n\n&&\n\n$$\n\nDS\n\n"
+}

@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/1fcc973e-459d-4aa5-a4ab-7577d02c099d",
+    "id": "1fcc973e-459d-4aa5-a4ab-7577d02c099d",
+    "wmoCollectiveId": "NWUS53",
+    "issuingOffice": "KMPX",
+    "issuanceTime": "2019-04-17T18:49:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS53 KMPX 171849\nLSRMPX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE TWIN CITIES/CHANHASSEN MN\n149 PM CDT WED APR 17 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0130 PM     FLOOD            2 SSE OSSEO             45.09N 93.38W\n04/17/2019                   HENNEPIN           MN   TRAINED SPOTTER  \n\n            FLOWING WATER OVER HENNEPIN COUNTY RD 81 \n            THAT IS SEVERAL INCHES DEEP. STANDING WATER \n            ALONG SIDE THE ROADS. \n\n\n&&\n\n$$\n\nBPH\n\n"
+}

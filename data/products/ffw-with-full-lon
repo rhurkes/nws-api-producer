@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/9f917087-987c-4e32-b241-7f2f13ffded8",
+    "id": "9f917087-987c-4e32-b241-7f2f13ffded8",
+    "wmoCollectiveId": "WGUS53",
+    "issuingOffice": "KGLD",
+    "issuanceTime": "2019-04-21T21:57:00+00:00",
+    "productCode": "FFW",
+    "productName": "Flash Flood Warning",
+    "productText": "\n000\nWGUS53 KGLD 212157\nFFWGLD\nCOC063-220100-\n/O.NEW.KGLD.FF.W.0002.190421T2157Z-190422T0100Z/\n/00000.0.ER.000000T0000Z.000000T0000Z.000000T0000Z.OO/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nFlash Flood Warning\nNational Weather Service Goodland KS\n357 PM MDT Sun Apr 21 2019\n\nThe National Weather Service in Goodland has issued a\n\n* Flash Flood Warning for...\n  Western Kit Carson County in east central Colorado...\n\n* Until 700 PM MDT.\n\n* At 357 PM MDT, Doppler radar indicated thunderstorms producing\n  heavy rain across the warned area. Up to two inches of rain have\n  already fallen. Flash flooding is expected to begin shortly.\n\n* Some locations that will experience flooding include...\n  Flagler and Seibert. \n\nThis includes Interstate 70 in Colorado between mile markers 390 and\n408.\n \nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTurn around, don't drown when encountering flooded roads. Most flood\ndeaths occur in vehicles.\n\n&&\n\nLAT...LON 3957 10315 3957 10290 3913 10276 3914 10316\n\n$$\n\nLundquist\n"
+}

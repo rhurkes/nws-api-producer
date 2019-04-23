@@ -5,72 +5,84 @@ extern crate slog;
 
 mod afd_parser;
 mod domain;
+mod ffw_parser;
 mod lsr_parser;
 mod parser;
+mod sel_parser;
+mod svr_parser;
+mod svs_parser;
+mod swo_parser;
+mod test_util;
 mod tor_parser;
 mod util;
 
 use self::domain::{ListProduct, Product, ProductsResult};
-use self::util::Config;
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 use wx::domain::Event;
 use wx::util::Logger;
 
-// TODO hook this back up
-// TODO get list of products to parse
-// TODO thread for each request
-
 const APP_NAME: &str = "nws_api_loader";
+const API_HOST: &str = "https://api.weather.gov";
+const POLL_INTERVAL_MS: u64 = 60_000;
+const USER_AGENT: &str = "sigtor.org";
 
 fn main() {
-    let config = Config::new("config.toml");
     let logger = Logger::new(&APP_NAME);
-
-    info!(logger, "initializing"; "config" => serde_json::to_string(&config).unwrap());
-
-    let age_limit_ms = config.age_limit_min * 60 * 1000;
     let mut threads = vec![];
-    let config = Arc::new(config);
     let logger = Arc::new(logger);
-    let product_codes = vec!["tor", "afd", "lsr"];
+    // let product_codes = vec!["afd", "ffw", "lsr", "sel", "svr", "svs", "swo", "tor"];
+    let product_codes = vec!["afd"];
+    info!(logger, "initializing"; "poll_interval_ms" => POLL_INTERVAL_MS);
 
     for product_code in product_codes {
-        let config = config.clone();
         let logger = logger.clone();
 
         threads.push(thread::spawn(move || {
             let client = reqwest::Client::new();
-            let fetcher = util::Fetcher::new(&client, &config, &logger);
-            let mut last_product_ts = wx::util::get_system_millis() - age_limit_ms;
+            let fetcher = util::Fetcher::new(&client, &logger, USER_AGENT);
+            // let mut last_product_ts = wx::util::get_system_micros();
+            let mut last_product_ts = 0;
 
             loop {
-                let url = format!("{}/products/types/{}", config.api_host, product_code);
+                let url = format!("{}/products/types/{}", API_HOST, product_code);
 
                 if let Ok(product_list) = fetcher.fetch::<ProductsResult>(&url) {
                     let products = get_new_products(last_product_ts, product_list);
 
                     if !products.is_empty() {
-                        last_product_ts =
-                            wx::util::ts_to_ticks(&products[0].issuance_time).unwrap();
+                        let new_ts = wx::util::ts_to_ticks(&products[0].issuance_time).unwrap();
+                        last_product_ts = new_ts;
                     }
 
-                    // let events: Vec<Option<Event>> = products
-                    //     .iter()
-                    //     // TODO these filter_maps are swallowing errors
-                    //     .filter_map(|x| fetcher.fetch::<Product>(&x._id).ok())
-                    //     .filter_map(|product| {
-                    //         dbg!(&product);
-                    //         parser.parse(&product).ok()
-                    //     });
-                    // TODO handle Result<Option<>>
-                    // .collect();
+                    let events: Vec<Event> = products
+                        .iter()
+                        .map(|x| match fetcher.fetch::<Product>(&x._id) {
+                            Ok(value) => Some(value),
+                            Err(error) => {
+                                error!(logger, "Fetch error"; "error" => format!("{}", error));
+                                None
+                            }
+                        })
+                        .filter(Option::is_some)
+                        .map(|x| match parser::parse(&x.unwrap()) {
+                            Ok(value) => Some(value),
+                            Err(error) => {
+                                error!(logger, "Parsing error"; "error" => format!("{}", error));
+                                None
+                            }
+                        })
+                        .filter_map(Option::unwrap)
+                        .collect();
 
-                    // dbg!(events);
+                    if !events.is_empty() {
+                        println!("writing {} events", events.len());
+                    }
+                    // TODO write to RocksDB
                 }
 
-                thread::sleep(Duration::from_millis(config.poll_interval_ms));
+                thread::sleep(Duration::from_millis(POLL_INTERVAL_MS));
             }
         }));
     }

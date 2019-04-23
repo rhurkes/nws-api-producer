@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/79912981-c72e-4a09-8b08-2bcef5af0444",
+    "id": "79912981-c72e-4a09-8b08-2bcef5af0444",
+    "wmoCollectiveId": "NWUS51",
+    "issuingOffice": "KBGM",
+    "issuanceTime": "2019-04-16T20:30:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS51 KBGM 162030\nLSRBGM\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE BINGHAMTON NY\n430 PM EDT TUE APR 16 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0145 AM     DOWNBURST        2 SSW AFTON             42.20N  75.55W\n04/15/2019  E80 MPH          CHENANGO           NY   NWS STORM SURVEY\n\n            A LARGE PORTION OF A ROOF WAS BLOWN OFF A HOUSE NEAR \n            THE INTERSECTION OF ROUTE 26 AND ROUTE 40 IN AFTON. A \n            SECTION OF A METAL ROOF FROM A NEARBY BARN ACROSS THE \n            STREET WAS TORN OFF. \n\n\n&&\n\n$$\n\nKLEIN\n\n\n"
+}

@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/3b985ae2-72ff-4ec8-aff8-fb0d6652a006",
+    "id": "3b985ae2-72ff-4ec8-aff8-fb0d6652a006",
+    "wmoCollectiveId": "NWUS52",
+    "issuingOffice": "KCAE",
+    "issuanceTime": "2019-04-15T18:41:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS52 KCAE 151841\nLSRCAE\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE COLUMBIA SC\n241 PM EDT MON APR 15 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0526 PM     FUNNEL CLOUD     JEFFERSON               34.65N 80.39W\n04/14/2019                   CHESTERFIELD       SC   PUBLIC           \n\n            PICTURES AND REPORT RECEIVED VIA SOCIAL \n            MEDIA OF A ROTATING WALL CLOUD IN DOWNTOWN \n            JEFFERSON, SC. TIME ESTIMATED BY RADAR. \n\n\n&&\n\n$$\n\nDA\n\n"
+}

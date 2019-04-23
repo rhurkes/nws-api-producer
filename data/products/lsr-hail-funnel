@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/cabf6bbe-5dcb-4648-8de9-26e390036c6c",
+    "id": "cabf6bbe-5dcb-4648-8de9-26e390036c6c",
+    "wmoCollectiveId": "NWUS51",
+    "issuingOffice": "KPBZ",
+    "issuanceTime": "2019-04-16T18:54:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS51 KPBZ 161854\nLSRPBZ\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE PITTSBURGH PA\n254 PM EDT TUE APR 16 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0743 PM     HAIL             1 SW DEMPSEYTOWN        41.50N  79.80W\n04/14/2019  E1.00 INCH       VENANGO            PA   PUBLIC          \n\n0743 PM     FUNNEL CLOUD     1 SW DEMPSEYTOWN        41.50N  79.80W\n04/14/2019                   VENANGO            PA   PUBLIC          \n\n            OBSERVER NOTED TWO DISTINCT FUNNEL CLOUDS DURING STORM \n            PASSAGE, THE LATTER OF WHICH WAS LARGER AND LIKELY \n            CORRESPONDS TO THE CONFIRMED TORNADO IN THE BAKER ROAD \n            AREA. A SECOND OBSERVER ALONG WILBEA LN ALSO NOTED THE \n            FUNNEL CLOUD. \n\n\n&&\n\nEVENT NUMBER PBZ1902049\nEVENT NUMBER PBZ1902050\n\n$$\n\nKRAMAR\n\n\n"
+}

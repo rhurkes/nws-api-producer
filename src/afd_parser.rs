@@ -33,23 +33,15 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_util::get_product_from_file;
 
     #[test]
     fn parse_afd_product() {
-        let mut product = Product {
-            _id: "_id".to_string(),
-            id: "id".to_string(),
-            issuance_time: "2018-05-02T01:01:00+00:00".to_string(),
-            issuing_office: "KTOP".to_string(),
-            product_code: "AFD".to_string(),
-            product_name: "Area Forecast Discussion".to_string(),
-            wmo_collective_id: "WFUS53".to_string(),
-            product_text: "some text".to_string(),
-        };
-
-        let result = parse(&mut product).unwrap();
+        let mut product = get_product_from_file("data/products/afd-mpx");
+        product.product_text = "test data".to_string();
+        let result = parse(&product).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1525222860000000,"event_type":"NwsAfd","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":null,"md":null,"outlook":null,"report":null,"text":"some text","title":"KTOP issues Area Forecast Discussion","valid_ts":null,"warning":null,"watch":null}"#;
-        assert!(serialized_result == expected);
+        let expected = r#"{"event_ts":1523671620000000,"event_type":"NwsAfd","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":null,"md":null,"outlook":null,"report":null,"text":"test data","title":"KMPX issues Area Forecast Discussion","valid_ts":null,"warning":null,"watch":null}"#;
+        assert_eq!(expected, serialized_result);
     }
 }

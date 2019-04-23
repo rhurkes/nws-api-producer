@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/18f37d6d-857b-451a-8c86-96a68918b1b6",
+    "id": "18f37d6d-857b-451a-8c86-96a68918b1b6",
+    "wmoCollectiveId": "NWUS51",
+    "issuingOffice": "KCLE",
+    "issuanceTime": "2019-04-16T16:33:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS51 KCLE 161633\nLSRCLE\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE CLEVELAND OH\n1233 PM EDT TUE APR 16 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0729 PM     HAIL             7 SSE NORTH EAST        42.12N 79.78W\n04/14/2019  U1.50 INCH       ERIE               PA   TRAINED SPOTTER  \n\n            SIDING HEAVILY DAMAGED TO THREE STRUCTURES \n            DUE TO HAIL. \n\n\n&&\n\n$$\n\nDK\n\n"
+}

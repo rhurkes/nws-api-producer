@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/e8d7d540-b5bd-4001-af32-dcaf2d4ba5e3",
+    "id": "e8d7d540-b5bd-4001-af32-dcaf2d4ba5e3",
+    "wmoCollectiveId": "WWUS51",
+    "issuingOffice": "KAKQ",
+    "issuanceTime": "2019-04-20T00:28:00+00:00",
+    "productCode": "SVS",
+    "productName": "Severe Weather Statement",
+    "productText": "\n000\nWWUS51 KAKQ 200028\nSVSAKQ\n\nSevere Weather Statement\nNational Weather Service Wakefield VA\n828 PM EDT FRI APR 19 2019\n\nNCC041-139-200036-\n/O.CAN.KAKQ.TO.W.0036.000000T0000Z-190420T0045Z/\nPasquotank NC-Chowan NC-\n828 PM EDT FRI APR 19 2019\n\n...THE TORNADO WARNING FOR NORTHWESTERN PASQUOTANK AND NORTHWESTERN\nCHOWAN COUNTIES IS CANCELLED...\n    \nThe tornadic thunderstorm which prompted the warning has moved out \nof the warned area. Therefore, the warning has been cancelled.\n\nA Tornado Watch remains in effect until midnight EDT for northeastern\nNorth Carolina...and southeastern Virginia.\n\nLAT...LON 3642 7666 3670 7661 3667 7631 3649 7647\n      3651 7649 3647 7649 3641 7654\nTIME...MOT...LOC 0026Z 196DEG 43KT 3646 7659 \n\n$$\n\nNCC029-073-VAC550-800-200045-\n/O.CON.KAKQ.TO.W.0036.000000T0000Z-190420T0045Z/\nCamden NC-Gates NC-City of Chesapeake VA-City of Suffolk VA-\n828 PM EDT FRI APR 19 2019\n\n...A TORNADO WARNING REMAINS IN EFFECT UNTIL 845 PM EDT FOR\nNORTHWESTERN CAMDEN...AND NORTHEASTERN GATES COUNTIES...THE\nSOUTHWESTERN CITY OF CHESAPEAKE AND THE SOUTHEASTERN CITY OF\nSUFFOLK...\n    \nAt 826 PM EDT, a severe thunderstorm capable of producing a tornado \nwas located over Sunbury, moving north to northeast at around 45 \nmph.\n\nHAZARD...Tornado.\n\nSOURCE...Radar indicated rotation.\n\nIMPACT...Flying debris will be dangerous to those caught without \n         shelter. Mobile homes will be damaged or destroyed. Damage \n         to roofs, windows, and vehicles will occur.  Tree damage is \n         likely.\n\nThis dangerous storm will be near...\n  Corapeake around 835 PM EDT.\n\nOther locations impacted by this tornadic thunderstorm include\nSuffolk Airport, Saunders, Savage, Nurney, Acorn Hill and Chesapeake\nAirport.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTAKE COVER NOW! Move to a basement or an interior room on the lowest\nfloor of a sturdy building. Avoid windows. If you are outdoors, in a\nmobile home, or in a vehicle, move to the closest substantial shelter\nand protect yourself from flying debris.\n\n&&\n\nLAT...LON 3642 7666 3670 7661 3667 7631 3649 7647\n      3651 7649 3647 7649 3641 7654\nTIME...MOT...LOC 0026Z 196DEG 43KT 3646 7659 \n\nTORNADO...RADAR INDICATED\nHAIL...<.75IN\n\n$$\n\nBROWN\n"
+}

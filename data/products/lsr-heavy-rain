@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/f9a44ddb-ba23-4724-8359-ca1274c8b946",
+    "id": "f9a44ddb-ba23-4724-8359-ca1274c8b946",
+    "wmoCollectiveId": "NWUS53",
+    "issuingOffice": "KMPX",
+    "issuanceTime": "2019-04-17T17:17:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS53 KMPX 171717\nLSRMPX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE TWIN CITIES/CHANHASSEN MN\n1217 PM CDT WED APR 17 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n1210 PM     HEAVY RAIN       2 W HASTINGS            44.74N 92.88W\n04/17/2019  M2.44 INCH       DAKOTA             MN   TRAINED SPOTTER  \n\n             \n\n\n&&\n\n$$\n\nTDH\n\n"
+}

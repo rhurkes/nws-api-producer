@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/cebf61b9-9430-4bca-b75e-911fb6f8383a",
+    "id": "cebf61b9-9430-4bca-b75e-911fb6f8383a",
+    "wmoCollectiveId": "NWUS52",
+    "issuingOffice": "KMHX",
+    "issuanceTime": "2019-04-15T08:15:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS52 KMHX 150815\nLSRMHX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE NEWPORT/MOREHEAD CITY NC\n415 AM EDT MON APR 15 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0358 AM     TSTM WND GST     COASTAL CAROLINA REGION 35.07N 77.04W\n04/15/2019  M61 MPH          CRAVEN             NC   ASOS             \n\n            NEW BERN/CRAVEN COUNTY ASOS (EWN) REPORTS \n            GUST OF 61 MPH. \n\n\n&&\n\n$$\n\nML\n\n"
+}

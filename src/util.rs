@@ -1,44 +1,20 @@
 use reqwest::Client;
 use serde::de::DeserializeOwned;
-use std::fs::File;
 use std::io::{ErrorKind, Read};
 use wx::util::Logger;
 
-#[derive(Deserialize, Serialize)]
-pub struct Config {
-    pub broker_list: String,
-    pub topic_name: String,
-    pub consumer_id: String,
-    pub api_host: String,
-    pub poll_interval_ms: u64,
-    pub age_limit_min: u64,
-    pub user_agent: String,
-}
-
-impl Config {
-    pub fn new(filepath: &str) -> Config {
-        let mut f = File::open(filepath).expect("config file not found");
-        let mut contents = String::new();
-        f.read_to_string(&mut contents)
-            .expect("something went wrong reading the file");
-        let config: Config = toml::from_str(&contents).expect("unable to parse config");
-
-        config
-    }
-}
-
 pub struct Fetcher<'a> {
     pub client: &'a Client,
-    pub config: &'a Config,
     pub logger: &'a Logger,
+    pub user_agent: &'a str,
 }
 
 impl<'a> Fetcher<'a> {
-    pub fn new(client: &'a Client, config: &'a Config, logger: &'a Logger) -> Fetcher<'a> {
+    pub fn new(client: &'a Client, logger: &'a Logger, user_agent: &'a str) -> Fetcher<'a> {
         Fetcher {
             client,
-            config,
             logger,
+            user_agent,
         }
     }
 
@@ -46,7 +22,7 @@ impl<'a> Fetcher<'a> {
         let mut response = self
             .client
             .get(url)
-            .header(reqwest::header::USER_AGENT, self.config.user_agent.as_str())
+            .header(reqwest::header::USER_AGENT, self.user_agent)
             .send()?;
 
         let status = response.status();

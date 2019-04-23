@@ -15,7 +15,7 @@ pub fn parse(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error
         .captures(&text)
         .ok_or_else(|| get_parse_error(&text))?;
     let poly = regexes
-        .polygon
+        .four_node_poly
         .captures(&text)
         .ok_or_else(|| get_parse_error(&text))?;
     let source = regexes
@@ -33,7 +33,9 @@ pub fn parse(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error
         .issued_for
         .captures(&text)
         .ok_or_else(|| get_parse_error(&text))?;
-    let issued_for = cap(issued_for.name("for")).replace("\n", "");
+    let issued_for = cap(issued_for.name("for"))
+        .replace("\n", "")
+        .replace("  ", " ");
     let issued_for = issued_for.trim().to_string();
     let text = cap(description.name("desc"))
         .to_string()
@@ -63,7 +65,7 @@ pub fn parse(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error
     let valid_ts = Some(short_time_to_ticks(&valid_range[1])?);
     let event_ts = util::ts_to_ticks(&product.issuance_time)?;
     let expires_ts = Some(short_time_to_ticks(&valid_range[2])?);
-    let title = format!("{} issues tornado warning", wfo); // 31 chars max
+    let title = format!("{} issues Tornado Warning", wfo); // 31 chars max
 
     let location = Some(Location {
         wfo: Some(wfo),
@@ -75,11 +77,11 @@ pub fn parse(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error
 
     let warning = Some(Warning {
         is_pds: lower_case_text.contains("particularly dangerous situation"),
-        was_observed: lower_case_text.contains("tornado...observed"),
-        is_tor_emergency: lower_case_text.contains("tornado emergency"),
-        motion_deg: cap(movement.name("deg")).parse::<u16>()?,
-        motion_kt: cap(movement.name("kt")).parse::<u16>()?,
-        source: cap(source.name("src")).to_string(),
+        was_observed: Some(lower_case_text.contains("tornado...observed")),
+        is_tor_emergency: Some(lower_case_text.contains("tornado emergency")),
+        motion_deg: Some(cap(movement.name("deg")).parse::<u16>()?),
+        motion_kt: Some(cap(movement.name("kt")).parse::<u16>()?),
+        source: Some(cap(source.name("src")).to_string()),
         issued_for,
         time: cap(movement.name("time")).to_string(),
     });
@@ -111,7 +113,7 @@ mod tests {
 
     #[test]
     fn parse_tor_product_happy_path() {
-        let mut product = Product{
+        let product = Product{
             _id: "_id".to_string(),
             id: "id".to_string(),
             issuance_time: "2018-05-02T01:01:00+00:00".to_string(),
@@ -123,15 +125,15 @@ mod tests {
         };
 
         let regexes = Regexes::new();
-        let result = parse(&mut product, regexes).unwrap();
+        let result = parse(&product, regexes).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1525222860000000,"event_type":"NwsTor","expires_ts":1525225500000000,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KTOP","point":{"lat":39.52,"lon":-97.28},"poly":[{"lat":39.77,"lon":-96.97},{"lat":39.5,"lon":-96.8},{"lat":39.39,"lon":-97.37},{"lat":39.59,"lon":-97.37}]},"md":null,"outlook":null,"report":null,"text":"At 800 PM CDT, a large and extremely dangerous tornado was located 2 miles south of Clifton, moving northeast at 25 mph.","title":"KTOP issues tornado warning","valid_ts":1525222860000000,"warning":{"is_pds":false,"is_tor_emergency":false,"was_observed":false,"issued_for":"Northwestern Riley County in northeastern Kansas...  Southern Washington County in north central Kansas...  Northern Clay County in north central Kansas...","motion_deg":245,"motion_kt":24,"source":"Radar indicated rotation","time":"0100Z"},"watch":null}"#;
-        assert!(serialized_result == expected);
+        let expected = r#"{"event_ts":1525222860000000,"event_type":"NwsTor","expires_ts":1525225500000000,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KTOP","point":{"lat":39.52,"lon":-97.28},"poly":[{"lat":39.77,"lon":-96.97},{"lat":39.5,"lon":-96.8},{"lat":39.39,"lon":-97.37},{"lat":39.59,"lon":-97.37}]},"md":null,"outlook":null,"report":null,"text":"At 800 PM CDT, a large and extremely dangerous tornado was located 2 miles south of Clifton, moving northeast at 25 mph.","title":"KTOP issues Tornado Warning","valid_ts":1525222860000000,"warning":{"is_pds":false,"is_tor_emergency":false,"was_observed":false,"issued_for":"Northwestern Riley County in northeastern Kansas... Southern Washington County in north central Kansas... Northern Clay County in north central Kansas...","motion_deg":245,"motion_kt":24,"source":"Radar indicated rotation","time":"0100Z"},"watch":null}"#;
+        assert_eq!(expected, serialized_result);
     }
 
     #[test]
     fn parse_tor_product_non_default_fields() {
-        let mut product = Product{
+        let product = Product{
             _id: "_id".to_string(),
             id: "id".to_string(),
             issuance_time: "2018-05-02T01:01:00+00:00".to_string(),
@@ -143,9 +145,9 @@ mod tests {
         };
 
         let regexes = Regexes::new();
-        let result = parse(&mut product, regexes).unwrap();
+        let result = parse(&product, regexes).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1525222860000000,"event_type":"NwsTor","expires_ts":1525225500000000,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KTOP","point":{"lat":39.52,"lon":-97.28},"poly":[{"lat":39.77,"lon":-96.97},{"lat":39.5,"lon":-96.8},{"lat":39.39,"lon":-97.37},{"lat":39.59,"lon":-97.37}]},"md":null,"outlook":null,"report":null,"text":"At 800 PM CDT, a large and extremely dangerous tornado was located 2 miles south of Clifton, moving northeast at 25 mph.","title":"KTOP issues tornado warning","valid_ts":1525222860000000,"warning":{"is_pds":false,"is_tor_emergency":false,"was_observed":false,"issued_for":"Northwestern Riley County in northeastern Kansas...  Southern Washington County in north central Kansas...  Northern Clay County in north central Kansas...","motion_deg":245,"motion_kt":24,"source":"Radar indicated rotation","time":"0100Z"},"watch":null}"#;
-        assert!(serialized_result == expected);
+        let expected = r#"{"event_ts":1525222860000000,"event_type":"NwsTor","expires_ts":1525225500000000,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KTOP","point":{"lat":39.52,"lon":-97.28},"poly":[{"lat":39.77,"lon":-96.97},{"lat":39.5,"lon":-96.8},{"lat":39.39,"lon":-97.37},{"lat":39.59,"lon":-97.37}]},"md":null,"outlook":null,"report":null,"text":"At 800 PM CDT, a large and extremely dangerous tornado was located 2 miles south of Clifton, moving northeast at 25 mph.","title":"KTOP issues Tornado Warning","valid_ts":1525222860000000,"warning":{"is_pds":false,"is_tor_emergency":false,"was_observed":false,"issued_for":"Northwestern Riley County in northeastern Kansas... Southern Washington County in north central Kansas... Northern Clay County in north central Kansas...","motion_deg":245,"motion_kt":24,"source":"Radar indicated rotation","time":"0100Z"},"watch":null}"#;
+        assert_eq!(expected, serialized_result);
     }
 }

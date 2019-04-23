@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://api.weather.gov/ontology#"
+  },
+  "@id": "https://api.weather.gov/products/9e063b71-f9d1-496d-a4ac-a9a8e786c211",
+  "id": "9e063b71-f9d1-496d-a4ac-a9a8e786c211",
+  "wmoCollectiveId": "WWUS20",
+  "issuingOffice": "KWNS",
+  "issuanceTime": "2018-04-03T17:13:00+00:00",
+  "productCode": "SEL",
+  "productName": "Severe Local Storm Watch and Watch Cancellation Msg",
+  "productText": "\n281 \nWWUS20 KWNS 031713\nSEL6  \nSPC WW 031713\nINZ000-KYZ000-OHZ000-040000-\n\nURGENT - IMMEDIATE BROADCAST REQUESTED\nTornado Watch Number 26\nNWS Storm Prediction Center Norman OK\n115 PM EDT Tue Apr 3 2018\n\nThe NWS Storm Prediction Center has cancelled \nTornado Watch 26 for portions of \n  Southern and Central Indiana\n  Northern Kentucky\n  Western and Central Ohio\n\n"
+}
