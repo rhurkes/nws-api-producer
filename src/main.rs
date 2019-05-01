@@ -20,7 +20,6 @@ use self::domain::{ListProduct, Product, ProductsResult};
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
-use wx::domain::Event;
 use wx::util::Logger;
 
 const APP_NAME: &str = "nws_api_loader";
@@ -32,8 +31,7 @@ fn main() {
     let logger = Logger::new(&APP_NAME);
     let mut threads = vec![];
     let logger = Arc::new(logger);
-    // let product_codes = vec!["afd", "ffw", "lsr", "sel", "svr", "svs", "swo", "tor"];
-    let product_codes = vec!["afd"];
+    let product_codes = vec!["afd", "ffw", "lsr", "sel", "svr", "svs", "swo", "tor"];
     info!(logger, "initializing"; "poll_interval_ms" => POLL_INTERVAL_MS);
 
     for product_code in product_codes {
@@ -41,9 +39,9 @@ fn main() {
 
         threads.push(thread::spawn(move || {
             let client = reqwest::Client::new();
+            let store_client = wx::store::Client::new();
             let fetcher = util::Fetcher::new(&client, &logger, USER_AGENT);
-            // let mut last_product_ts = wx::util::get_system_micros();
-            let mut last_product_ts = 0;
+            let mut last_product_ts = wx::util::get_system_micros();
 
             loop {
                 let url = format!("{}/products/types/{}", API_HOST, product_code);
@@ -56,7 +54,7 @@ fn main() {
                         last_product_ts = new_ts;
                     }
 
-                    let events: Vec<Event> = products
+                    products
                         .iter()
                         .map(|x| match fetcher.fetch::<Product>(&x._id) {
                             Ok(value) => Some(value),
@@ -74,12 +72,12 @@ fn main() {
                             }
                         })
                         .filter_map(Option::unwrap)
-                        .collect();
-
-                    if !events.is_empty() {
-                        println!("writing {} events", events.len());
-                    }
-                    // TODO write to RocksDB
+                        .for_each(|x| match store_client.put_event(&x) {
+                            Ok(_) => debug!(logger, "Stored event";),
+                            Err(_) => {
+                                error!(logger, "Store error"; "error" => "unable to store event")
+                            }
+                        });
                 }
 
                 thread::sleep(Duration::from_millis(POLL_INTERVAL_MS));
@@ -92,6 +90,10 @@ fn main() {
     }
 }
 
+/**
+ * Returns products newer than the latest seen. A simple take_while could suffice, but that
+ * carries the possibility of missing products due to an unparseable datetime string.
+ */
 fn get_new_products(last_ts: u64, products_result: ProductsResult) -> Vec<ListProduct> {
     let mut new_products: Vec<ListProduct> = vec![];
 
@@ -110,34 +112,23 @@ fn get_new_products(last_ts: u64, products_result: ProductsResult) -> Vec<ListPr
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs::File;
+    use std::io::Read;
 
-    // #[test]
-    // fn get_new_product_ids_should_handle_no_product_ids() {
-    //     let product_list = ProductsResult {
-    //         _context: Context {
-    //             _vocab: String::new(),
-    //         },
-    //         products: vec![],
-    //     };
-    //     let result = get_new_product_ids(0, product_list);
-    //     let expected: Vec<Product> = vec![];
-    //     assert!(result.len() == expected.len());
-    // }
-
-    // #[test]
-    // fn get_new_product_ids_should_filter_out_same_or_older_products() {
-    //     let product_list_result = ProductsResult{_context: Context{_vocab: String::new()}, products: vec![
-    //         serde_json::from_str(r#"{"@id": "", "id": "", "issuanceTime": "2018-12-01T00:23:59+00:00", "issuingOffice": "", "productCode": "", "productName": "", "wmoCollectiveId": ""}"#).unwrap(),
-    //         serde_json::from_str(r#"{"@id": "", "id": "", "issuanceTime": "2018-12-01T00:23:00+00:00", "issuingOffice": "", "productCode": "", "productName": "", "wmoCollectiveId": ""}"#).unwrap(),
-    //         serde_json::from_str(r#"{"@id": "", "id": "", "issuanceTime": "2018-12-01T00:22:59+00:00", "issuingOffice": "", "productCode": "", "productName": "", "wmoCollectiveId": ""}"#).unwrap(),
-    //     ]};
-
-    //     let result = get_new_product_ids(1543623780000, product_list_result);
-    //     let mut result_times: Vec<String> = vec![];
-    //     for product in result {
-    //         result_times.push(product.issuance_time);
-    //     }
-
-    //     assert!(result_times == ["2018-12-01T00:23:59+00:00"]);
-    // }
+    #[test]
+    fn get_new_products_should_only_parse_newer_products() {
+        let last_ts = 1555977060000000;
+        let mut f = File::open("data/product-list-tor").expect("product file not found");
+        let mut contents = String::new();
+        f.read_to_string(&mut contents)
+            .expect("something went wrong reading the file");
+        let result: ProductsResult = serde_json::from_str(&contents).unwrap();
+        let new_products = get_new_products(last_ts, result);
+        let ids: Vec<&str> = new_products.iter().map(|x| x.id.as_str()).collect();
+        let expected_ids = vec![
+            "e0fdf7de-6229-4330-9d4d-3a2af96ffa4c",
+            "e0fdf7de-6229-4330-9d4d-3a2af96ffa4d",
+        ];
+        assert_eq!(expected_ids, ids);
+    }
 }

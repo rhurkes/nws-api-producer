@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/b37bc82e-3319-49ef-b4b0-ae32b76f1df7",
+    "id": "b37bc82e-3319-49ef-b4b0-ae32b76f1df7",
+    "wmoCollectiveId": "WUUS54",
+    "issuingOffice": "KMAF",
+    "issuanceTime": "2019-04-23T14:21:00+00:00",
+    "productCode": "SVR",
+    "productName": "Severe Thunderstorm Warning",
+    "productText": "\n000\nWUUS54 KMAF 231421\nSVRMAF\nTXC173-227-317-335-231500-\n/O.NEW.KMAF.SV.W.0030.190423T1421Z-190423T1500Z/\n\nBULLETIN - IMMEDIATE BROADCAST REQUESTED\nSevere Thunderstorm Warning\nNational Weather Service Midland/Odessa TX\n921 AM CDT Tue Apr 23 2019\n\nThe National Weather Service in Midland has issued a\n\n* Severe Thunderstorm Warning for...\n  Northeastern Glasscock County in western Texas...\n  West central Mitchell County in western Texas...\n  Howard County in western Texas...\n  East central Martin County in western Texas...\n\n* Until 1000 AM CDT.\n\n* At 921 AM CDT, a severe thunderstorm was located near Lomax, or 8\n  miles southwest of Big Spring, moving northeast at 55 mph.\n\n  HAZARD...60 mph wind gusts and half dollar size hail.\n\n  SOURCE...Radar indicated.\n\n  IMPACT...Hail damage to vehicles is expected. Expect wind damage \n           to roofs, siding, and trees.\n\n* Locations impacted include...\n  Big Spring, Coahoma, Forsan, Sand Springs, Lomax, Luther, Big\n  Spring Country Club, Vincent, Big Spring McMahon-Wrinkle Airpark,\n  Knott and Elbow.\n\nThis includes Interstate 20 between mile markers 164 and 197.\n \nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nFor your protection move to an interior room on the lowest floor of a\nbuilding.\n\n&&\n\nLAT...LON 3198 10163 3244 10178 3250 10134 3249 10117\n      3211 10117\nTIME...MOT...LOC 1421Z 240DEG 49KT 3220 10160 \n\nHAIL...1.25IN\nWIND...60MPH\n \n$$\n\n12\n"
+}

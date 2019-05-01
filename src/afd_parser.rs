@@ -6,7 +6,7 @@ use wx::util;
 pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
     let wfo = product.issuing_office.to_string();
     let event_ts = util::ts_to_ticks(&product.issuance_time)?;
-    let title = format!("{} issues Area Forecast Discussion", wfo); // 31 chars max
+    let title = format!("Area Forecast Discussion ({})", wfo); // 31 chars max
     let text = &product.product_text;
 
     let event = Event {
@@ -41,7 +41,7 @@ mod tests {
         product.product_text = "test data".to_string();
         let result = parse(&product).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1523671620000000,"event_type":"NwsAfd","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":null,"md":null,"outlook":null,"report":null,"text":"test data","title":"KMPX issues Area Forecast Discussion","valid_ts":null,"warning":null,"watch":null}"#;
+        let expected = r#"{"event_ts":1523671620000000,"event_type":"NwsAfd","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":null,"md":null,"outlook":null,"report":null,"text":"test data","title":"Area Forecast Discussion (KMPX)","valid_ts":null,"warning":null,"watch":null}"#;
         assert_eq!(expected, serialized_result);
     }
 }

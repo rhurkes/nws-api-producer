@@ -7,6 +7,7 @@ use wx::util;
 const AGE_THRESHOLD_MICROS: u64 = 60 * 60 * 1000 * 1000;
 
 // Intermediary structure for an LSR to make parsing easier
+#[derive(Debug)]
 struct Skeleton<'a> {
     top_line: &'a str,
     bottom_line: &'a str,
@@ -16,7 +17,8 @@ struct Skeleton<'a> {
 }
 
 pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
-    let skeleton = get_skeleton(&product.product_text)?;
+    let text = &product.product_text;
+    let skeleton = get_skeleton(&text)?;
 
     if skeleton.is_none() {
         return Ok(None);
@@ -35,10 +37,6 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
         return Ok(None);
     }
 
-    if report_ts > event_ts {
-        // TODO log warning - report ts should be before event ts, but strange things happen
-    }
-
     let raw_point = lsr.top_line.get(53..).unwrap().replace("W", "");
     let raw_point = raw_point.trim();
     let lon: f32 = raw_point.get(7..).unwrap().trim().parse().unwrap();
@@ -48,13 +46,6 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
         lon,
     });
 
-    // Summary can span multiple lines and will have 12 consecutive spaces embedded
-    let mut text = "".to_string();
-    for i in (lsr.remarks_index + 5)..lsr.end_index {
-        text += lsr.lines[i as usize];
-    }
-    let text = text.replace("            ", "").trim().to_string();
-
     let wfo = &product.issuing_office;
     let raw_hazard = lsr.top_line.get(12..29).unwrap().trim();
     let hazard = get_lsr_hazard_type(raw_hazard);
@@ -62,7 +53,8 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
     let mut units = None;
     let mut magnitude = None;
     let raw_mag = lsr.bottom_line.get(12..29).unwrap().trim();
-    let mut title = wfo.to_string() + " reports";
+    let county = lsr.bottom_line.get(29..48).unwrap().trim().to_string();
+    let mut title = "Report: ".to_string();
 
     if !raw_mag.is_empty() {
         was_measured = Some(raw_mag.get(0..1).unwrap() == "M");
@@ -70,20 +62,21 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
         if raw_mag.contains("MPH") {
             units = Some(Units::Mph);
             magnitude = Some(raw_mag.get(1..space_index).unwrap().parse().unwrap());
-            title = format!("{} {} MPH", title, magnitude.unwrap());
+            title = format!("{} {}mph", title, magnitude.unwrap());
         } else if raw_mag.contains("INCH") {
             units = Some(Units::Inches);
             magnitude = Some(raw_mag.get(1..space_index).unwrap().parse().unwrap());
-            title = format!("{} {} INCH", title, magnitude.unwrap());
+            title = format!("{} {}\"", title, magnitude.unwrap());
         }
     }
 
-    let title = format!("{} {:?}", title, hazard);
+    let title = format!("{} {:?} ({})", title, hazard, wfo);
 
     let location = Location {
         point,
         poly: None,
         wfo: Some(wfo.to_string()),
+        county: Some(county),
     };
 
     // CO-OP OBSERVER, TRAINED SPOTTER, STORM CHASER, PUBLIC, EMERGENCY MNGR, ASOS, AWOS,
@@ -102,7 +95,7 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
     let mut event = Event::new(event_ts, EventType::NwsLsr, title);
     event.location = Some(location);
     event.report = Some(report);
-    event.text = Some(text);
+    event.text = Some(text.to_string());
 
     Ok(Some(event))
 }
@@ -128,18 +121,27 @@ fn get_skeleton(text: &str) -> Result<Option<Skeleton>, Error> {
         if line.contains("..REMARKS..") {
             remarks_index = Some(i);
         }
+
+        // This delimiter doesn't always appear...
         if line.contains("&&") {
             end_index = Some(i);
         }
+
+        // ...but this one should...
+        if line.contains("$$") && end_index.is_none() {
+            end_index = Some(i);
+        }
+    }
+
+    // ...and if it doesn't we really don't want things to blow up.
+    if end_index.is_none() {
+        end_index = Some(lines.len() - 1);
     }
 
     if remarks_index.is_none() {
         return Err(Error::Wx(<WxError>::new(
             "invalid LSR body: missing REMARKS",
         )));
-    }
-    if end_index.is_none() {
-        return Err(Error::Wx(<WxError>::new("invalid LSR body: missing &&")));
     }
 
     let remarks_index = remarks_index.unwrap();
@@ -185,13 +187,6 @@ mod tests {
     use super::super::test_util::get_product_from_file;
     use super::*;
 
-    // #[test]
-    // fn lsr_time_to_ticks_should_return_correct_ticks() {
-    //     let lsr_time = "1008 PM +0600 WED MAR 06 2019";
-    //     let result = lsr_time_to_ticks(lsr_time).unwrap();
-    //     assert_eq!(result, 1551888480000000);
-    // }
-
     #[test]
     fn get_report_ticks_should_return_correct_ticks() {
         let time = "03/13/20190300 PM+0400";
@@ -207,43 +202,50 @@ mod tests {
     }
 
     #[test]
-    fn get_skeleton_summary_should_be_an_error() {
+    fn get_skeleton_summary_should_be_an_ok_none() {
         let product = get_product_from_file("data/products/lsr-summary");
-        let result = get_skeleton(&product.product_text);
-        assert!(result.is_err());
+        let result = get_skeleton(&product.product_text).unwrap();
+        assert!(result.is_none());
     }
 
     #[test]
     fn get_skeleton_corrected_should_be_an_error() {
         let product = get_product_from_file("data/products/lsr-corrected-tstm-wind-dmg");
-        let result = get_skeleton(&product.product_text);
-        assert!(result.is_err());
+        let result = get_skeleton(&product.product_text).unwrap();
+        assert!(result.is_none());
     }
 
     #[test]
     fn get_skeleton_no_remarks_index_should_be_an_error() {
-        let text = "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT...CORRECTED\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            \n\n0700 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n05/01/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n&&\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n";
+        let text = "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            \n\n0700 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n05/01/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n&&\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n";
         let result = get_skeleton(text);
         assert!(result.is_err());
     }
 
     #[test]
-    fn get_skeleton_no_end_index_should_be_an_error() {
-        let text = "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT...CORRECTED\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0700 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n05/01/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n";
+    fn get_skeleton_no_double_and_should_be_handled() {
+        let text = "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0700 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n05/01/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n";
         let result = get_skeleton(text);
-        assert!(result.is_err());
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn get_skeleton_no_end_index_should_be_handled() {
+        let text = "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0700 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n05/01/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\nSI\n\n\n\n";
+        let result = get_skeleton(text);
+        assert!(result.is_ok());
     }
 
     #[test]
     fn get_skeleton_no_top_details_should_be_an_error() {
-        let text = "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT...CORRECTED\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n\n05/01/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n&&\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n";
+        let text = "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n\n05/01/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n&&\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n";
         let result = get_skeleton(text);
         assert!(result.is_err());
     }
 
     #[test]
     fn get_skeleton_no_bottom_details_should_be_an_error() {
-        let text = "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT...CORRECTED\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0700 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n\n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n&&\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n";
+        let text = "\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE MIAMI FL\n701 PM CDT TUE MAY 1 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0700 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n\n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n&&\n\nCORRECTED EVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n";
         let result = get_skeleton(text);
         assert!(result.is_err());
     }
@@ -253,7 +255,7 @@ mod tests {
         let product = get_product_from_file("data/products/lsr-tornado");
         let result = parse(&product).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1522524900000000,"event_type":"NwsLsr","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KMFL","point":{"lat":26.8,"lon":-80.64},"poly":null},"md":null,"outlook":null,"report":{"reporter":"TRAINED SPOTTER","hazard":"Tornado","magnitude":null,"units":null,"was_measured":null,"report_ts":1522522800000000},"text":"TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. RECLASSIFIED AS A TORNADO.","title":"KMFL reports Tornado","valid_ts":null,"warning":null,"watch":null}"#;
+        let expected = r#"{"event_ts":1522524900000000,"event_type":"NwsLsr","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KMFL","point":{"lat":26.8,"lon":-80.64},"poly":null,"county":"PALM BEACH"},"md":null,"outlook":null,"report":{"reporter":"TRAINED SPOTTER","hazard":"Tornado","magnitude":null,"units":null,"was_measured":null,"report_ts":1522522800000000},"text":"\n158 \nNWUS52 KMFL 311935\nLSRMFL\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE MIAMI FL\n335 PM EDT SAT MAR 31 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0300 PM     TORNADO          2 SE PAHOKEE            26.80N  80.64W\n03/31/2018                   PALM BEACH         FL   TRAINED SPOTTER \n\n            TRAINED SKYWARN SPOTTER OBSERVED FROM PAHOKEE A FUNNEL \n            CLOUD APPROXIMATELY 3 MILES SOUTHEAST OF PAHOKEE, \n            PARTIALLY RAIN-WRAPPED AND NEARLY STATIONARY. THE FUNNEL \n            EXTENDED TO NEARLY HALFWAY TO THE GROUND BEFORE LIFTING. \n            LOCATION RADAR-ESTIMATED/ADJUSTED. VIDEO RECEIVED OF \n            FUNNEL REACHING THE GROUND WITH DUST BEING KICKED UP. \n            RECLASSIFIED AS A TORNADO. \n\n\n&&\nEVENT...FATALITIES...INJURIES...REMARKS\n\nEVENT NUMBER MFL1800020\n\n$$\n\nSI\n\n\n\n","title":"Report:  Tornado (KMFL)","valid_ts":null,"warning":null,"watch":null}"#;
         assert_eq!(expected, serialized_result);
     }
 
@@ -269,7 +271,7 @@ mod tests {
         let product = get_product_from_file("data/products/lsr-tstm-wind");
         let result = parse(&product).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1555316100000000,"event_type":"NwsLsr","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KMHX","point":{"lat":35.07,"lon":-77.04},"poly":null},"md":null,"outlook":null,"report":{"reporter":"ASOS","hazard":"Wind","magnitude":61.0,"units":"Mph","was_measured":true,"report_ts":1555315080000000},"text":"NEW BERN/CRAVEN COUNTY ASOS (EWN) REPORTS GUST OF 61 MPH.","title":"KMHX reports 61 MPH \"TSTM WND GST\"","valid_ts":null,"warning":null,"watch":null}"#;
+        let expected = r#"{"event_ts":1555316100000000,"event_type":"NwsLsr","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KMHX","point":{"lat":35.07,"lon":-77.04},"poly":null,"county":"CRAVEN"},"md":null,"outlook":null,"report":{"reporter":"ASOS","hazard":"Wind","magnitude":61.0,"units":"Mph","was_measured":true,"report_ts":1555315080000000},"text":"\n000\nNWUS52 KMHX 150815\nLSRMHX\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE NEWPORT/MOREHEAD CITY NC\n415 AM EDT MON APR 15 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0358 AM     TSTM WND GST     COASTAL CAROLINA REGION 35.07N 77.04W\n04/15/2019  M61 MPH          CRAVEN             NC   ASOS             \n\n            NEW BERN/CRAVEN COUNTY ASOS (EWN) REPORTS \n            GUST OF 61 MPH. \n\n\n&&\n\n$$\n\nML\n\n","title":"Report:  61mph Wind (KMHX)","valid_ts":null,"warning":null,"watch":null}"#;
         assert_eq!(expected, serialized_result);
     }
 
@@ -278,7 +280,7 @@ mod tests {
         let product = get_product_from_file("data/products/lsr-hail-remarks");
         let result = parse(&product).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1522113360000000,"event_type":"NwsLsr","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KSJT","point":{"lat":32.07,"lon":-100.66},"poly":null},"md":null,"outlook":null,"report":{"reporter":"STORM CHASER","hazard":"Hail","magnitude":1.25,"units":"Inches","was_measured":false,"report_ts":1522112100000000},"text":"1.25 HAIL ON HWY 208 NEAR SILVER","title":"KSJT reports 1.25 INCH \"HAIL\"","valid_ts":null,"warning":null,"watch":null}"#;
+        let expected = r#"{"event_ts":1522113360000000,"event_type":"NwsLsr","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":"KSJT","point":{"lat":32.07,"lon":-100.66},"poly":null,"county":"COKE"},"md":null,"outlook":null,"report":{"reporter":"STORM CHASER","hazard":"Hail","magnitude":1.25,"units":"Inches","was_measured":false,"report_ts":1522112100000000},"text":"\n106 \nNWUS54 KSJT 270116\nLSRSJT\n\nPRELIMINARY LOCAL STORM REPORT\nNational Weather Service San Angelo Tx\n816 PM CDT MON MAR 26 2018\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0755 PM     HAIL             1 E SILVER              32.07N 100.66W\n03/26/2018  E1.25 INCH       COKE               TX   STORM CHASER    \n\n            1.25 HAIL ON HWY 208 NEAR SILVER \n\n\n&&\n\nEVENT NUMBER SJT1800032\n\n$$\n\nSJT\n\n","title":"Report:  1.25\" Hail (KSJT)","valid_ts":null,"warning":null,"watch":null}"#;
         assert_eq!(expected, serialized_result);
     }
 

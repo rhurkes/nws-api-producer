@@ -23,8 +23,6 @@ Details of product codes and products can be found at: https://en.wikipedia.org/
 - Need to install ZeroMQ: `brew install zmq`
 
 # TODO
-- ffw is failing on 5 digit lons
-- timing out on client, what is the timeout?
 - handle multiple events in an LSR
 - check on TSTM and no severe outlooks once they happen, to finish get_outlook_risk
 - implement sev/pts once mapping client exists

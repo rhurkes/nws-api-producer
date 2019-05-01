@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/e0fdf7de-6229-4330-9d4d-3a2af96ffa4c",
+    "id": "e0fdf7de-6229-4330-9d4d-3a2af96ffa4c",
+    "wmoCollectiveId": "WFUS54",
+    "issuingOffice": "KMAF",
+    "issuanceTime": "2019-04-22T23:53:00+00:00",
+    "productCode": "TOR",
+    "productName": "Tornado Warning",
+    "productText": "\n000\nWFUS54 KMAF 222353\nTORMAF\nTXC165-230045-\n/O.NEW.KMAF.TO.W.0008.190422T2353Z-190423T0045Z/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nTornado Warning\nNational Weather Service Midland/Odessa TX\n653 PM CDT Mon Apr 22 2019\n\nThe National Weather Service in Midland has issued a\n\n* Tornado Warning for...\n  Central Gaines County in western Texas...\n\n* Until 745 PM CDT.\n    \n* At 652 PM CDT, a severe thunderstorm capable of producing a \n  tornado was located 5 miles southeast of Seminole, moving \n  northeast at 25 mph.\n\n  HAZARD...Tornado and half dollar size hail.\n\n  SOURCE...Radar indicated rotation.\n\n  IMPACT...Flying debris will be dangerous to those caught without \n           shelter. Mobile homes will be damaged or destroyed. \n           Damage to roofs, windows, and vehicles will occur.  Tree \n           damage is likely.\n\n* This tornadic thunderstorm will remain over mainly rural areas of\n  central Gaines County including Fairview.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTAKE COVER NOW! Move to a basement or an interior room on the lowest\nfloor of a sturdy building. Avoid windows. If you are outdoors, in a\nmobile home, or in a vehicle, move to the closest substantial shelter\nand protect yourself from flying debris.\n\n&&\n\nLAT...LON 3260 10261 3277 10270 3287 10248 3260 10233\nTIME...MOT...LOC 2352Z 239DEG 49KT 3271 10255 \n\nTORNADO...RADAR INDICATED\nHAIL...1.25IN\n\n$$\n\n12\n"
+}

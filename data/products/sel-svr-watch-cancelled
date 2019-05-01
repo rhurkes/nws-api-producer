@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/881addae-6ccc-4d55-b59e-8d46997c2c02",
+    "id": "881addae-6ccc-4d55-b59e-8d46997c2c02",
+    "wmoCollectiveId": "WWUS20",
+    "issuingOffice": "KWNS",
+    "issuanceTime": "2019-04-23T07:03:00+00:00",
+    "productCode": "SEL",
+    "productName": "Severe Local Storm Watch and Watch Cancellation Msg",
+    "productText": "\n000\nWWUS20 KWNS 230703\nSEL4  \nSPC WW 230703\nOKZ000-TXZ000-230700-\n\nURGENT - IMMEDIATE BROADCAST REQUESTED\nSEVERE THUNDERSTORM WATCH - NUMBER 94 \nNWS STORM PREDICTION CENTER NORMAN OK \n203 AM CDT TUE APR 23 2019\n\nTHE NWS STORM PREDICTION CENTER HAS CANCELLED \nSEVERE THUNDERSTORM WATCH NUMBER 94 ISSUED AT 635 PM CDT FOR PORTIONS OF\n\n         OKLAHOMA\n         TEXAS\n\n"
+}

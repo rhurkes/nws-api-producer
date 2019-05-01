@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/c70fc1b9-16e2-4867-af37-a5296c8fa9c5",
+    "id": "c70fc1b9-16e2-4867-af37-a5296c8fa9c5",
+    "wmoCollectiveId": "NWUS54",
+    "issuingOffice": "KFWD",
+    "issuanceTime": "2019-04-24T02:18:00+00:00",
+    "productCode": "LSR",
+    "productName": "Local Storm Report",
+    "productText": "\n000\nNWUS54 KFWD 240218\nLSRFWD\n\nPRELIMINARY LOCAL STORM REPORT\nNATIONAL WEATHER SERVICE FORT WORTH TX\n918 PM CDT TUE APR 23 2019\n\n..TIME...   ...EVENT...      ...CITY LOCATION...     ...LAT.LON...\n..DATE...   ....MAG....      ..COUNTY LOCATION..ST.. ...SOURCE....\n            ..REMARKS..\n\n0912 PM     HAIL             ALEDO                   32.70N  97.60W\n04/23/2019  E1.00 INCH       PARKER             TX   AMATEUR RADIO   \n\n            QUARTER SIZE HAIL IN ALEDO.  \n\n$$\n"
+}

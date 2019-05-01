@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/dcc1d6a0-6cb3-420b-ba98-24908907f04a",
+    "id": "dcc1d6a0-6cb3-420b-ba98-24908907f04a",
+    "wmoCollectiveId": "ACUS11",
+    "issuingOffice": "KWNS",
+    "issuanceTime": "2019-04-23T06:28:00+00:00",
+    "productCode": "SWO",
+    "productName": "Severe Storm Outlook Narrative (AC)",
+    "productText": "\n000\nACUS11 KWNS 230628\nSWOMCD\nSPC MCD 230628 \nTXZ000-OKZ000-230730-\n\nMesoscale Discussion 0423\nNWS Storm Prediction Center Norman OK\n0128 AM CDT Tue Apr 23 2019\n\nAreas affected...TX Permian Basin...Northwest TX...Far Southwest OK\n\nConcerning...Severe Thunderstorm Watch 94...\n\nValid 230628Z - 230730Z\n\nThe severe weather threat for Severe Thunderstorm Watch 94\ncontinues.\n\nSUMMARY...Some isolated hail will remain possible for at least the\nnext several hours but the isolated/marginal nature of the threat\nwill preclude the need for another watch.\n\nDISCUSSION...Scattered thunderstorms continue across the region,\nsupported primarily by isentropic ascent throughout a cold front\nextending from southwest OK into southwest TX. This continued\nwarm-air advection, aided by broad large-scale ascent, will likely\nlead to the persistence of thunderstorms for the next several hours.\nEven so, instability continues to wane amidst nocturnal cooling and\nwarming aloft resulting from multiple rounds of storms in the same\nareas. Expectation is for isolated instances of hail resulting from\nbrief updraft intensification due to storm interactions amidst\nmoderate vertical shear (i.e. 0-6 km bulk shear around 40-50 kt).\nIsolated and brief nature to this threat will preclude the need for\nan additional watch.\n\nAn extension in time may be warranted across the Permian Basin where\nthe storm moving through Andrews County TX continues to show a\nstrong updraft capable of severe hail. The organized character of\nthis storm may allow it to persist longer, with the resulting severe\nthreat extending past the watch expiration time of 07Z.\n\n..Mosier/Guyer.. 04/23/2019\n\n...Please see www.spc.noaa.gov for graphic product...\n\nATTN...WFO...OUN...SJT...LUB...MAF...\n\nLAT...LON   33010286 34949949 33929881 32000219 33010286 \n\n"
+}

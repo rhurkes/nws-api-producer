@@ -9,15 +9,14 @@ use super::swo_parser;
 use super::tor_parser;
 use chrono::prelude::*;
 use regex::{Match, Regex, RegexBuilder};
+use std::panic;
 use wx::domain::Event;
 use wx::error::{Error, WxError};
 
 pub struct Regexes {
-    pub description: Regex,
     pub movement: Regex,
-    pub four_node_poly: Regex,
+    pub poly_condensed: Regex,
     pub source: Regex,
-    pub issued_for: Regex,
     pub valid: Regex,
     pub affected: Regex,
     pub probability: Regex,
@@ -25,42 +24,35 @@ pub struct Regexes {
     pub md_number: Regex,
     pub watch_id: Regex,
     pub poly: Regex,
+    pub warning_for: Regex,
+    pub watch_for: Regex,
 }
 
 impl Regexes {
     pub fn new() -> Regexes {
-        let description_pattern = r"\n\*\s(?P<desc>at\s[\S|\s]+?)\n\n";
-        let movement_pattern = r"\ntime...mot...loc\s(?P<time>\d{4}z)\s(?P<deg>\d+)\D{3}\s(?P<kt>\d+)kt\s(?P<lat>\d{4})\s(?P<lon>\d{4})";
-        let four_node_poly_pattern =
-            r"lat...lon\s(?P<poly>\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s*?)";
+        let movement_pattern = r"\ntime...mot...loc\s(?P<time>\d{4}z)\s(?P<deg>\d+)\D{3}\s(?P<kt>\d+)kt\s(?P<lat>\d{4})\s(?P<lon>\d{4,5})";
         let source_pattern = r"\n{2}\s{2}source...(?P<src>.+)\.\s?\n{2}";
-        let issued_for_pattern = r"\n\n\*\s[\s|\S]+ warning for\.{3}\n(?P<for>[\s|\S]*?)\n\n\*";
         let valid_pattern = r"(\d{6}t\d{4}z)-(\d{6}t\d{4}z)";
         let affected_pattern = r"Areas affected\.{3}([\S|\s]*?)\n\n";
         let probability_pattern = r"Probability of Watch Issuance...(\d{1,3}) percent";
         let wfos_pattern = r"ATTN...WFO...(.+)\n\n";
         let poly_pattern = r"(\d{4}\s\d{4,5})+";
+        let poly_condensed_pattern = r"(\d{8})\s";
         let md_number_pattern = r"Mesoscale Discussion (\d{4})";
         let watch_id_pattern = r"Watch Number (\d{1,3})";
+        let warning_for_pattern = r"Warning for...([\s|\S]+?)\n\n";
+        let watch_for_pattern = r"Watch for portions of\s\n([\s|\S]+?)\n\n";
 
         Regexes {
-            description: RegexBuilder::new(description_pattern)
-                .case_insensitive(true)
-                .build()
-                .unwrap(),
             movement: RegexBuilder::new(movement_pattern)
                 .case_insensitive(true)
                 .build()
                 .unwrap(),
-            four_node_poly: RegexBuilder::new(four_node_poly_pattern)
+            poly_condensed: RegexBuilder::new(poly_condensed_pattern)
                 .case_insensitive(true)
                 .build()
                 .unwrap(),
             source: RegexBuilder::new(source_pattern)
-                .case_insensitive(true)
-                .build()
-                .unwrap(),
-            issued_for: RegexBuilder::new(issued_for_pattern)
                 .case_insensitive(true)
                 .build()
                 .unwrap(),
@@ -92,16 +84,29 @@ impl Regexes {
                 .case_insensitive(true)
                 .build()
                 .unwrap(),
+            warning_for: RegexBuilder::new(warning_for_pattern)
+                .case_insensitive(true)
+                .build()
+                .unwrap(),
+            watch_for: RegexBuilder::new(watch_for_pattern)
+                .case_insensitive(true)
+                .build()
+                .unwrap(),
         }
     }
 }
 
+/**
+ * Function that determines which product gets which parser.
+ * NOTE: We're forcing no abort panics in the Cargo.toml, and catching panics here.
+ * Yes, this is UGLY and BAD - but there are a ton of slices and regex Option unwraps
+ * buried within. One rainy day, I'll start validating the correctness, but for now,
+ * it's critical that the processing threads don't die.
+ */
 pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
     let regexes = Regexes::new();
 
-    // TODO catch panics here
-
-    match product.product_code.as_ref() {
+    let result = panic::catch_unwind(|| match product.product_code.as_ref() {
         "AFD" => afd_parser::parse(&product),
         "LSR" => lsr_parser::parse(&product),
         "SEL" => sel_parser::parse(&product, regexes),
@@ -114,6 +119,13 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
             let reason = format!("unknown product code: {}", &product.product_code);
             Err(Error::Wx(<WxError>::new(&reason)))
         }
+    });
+
+    if result.is_ok() {
+        result.unwrap()
+    } else {
+        let reason = format!("recovered from panic on product: {}", product.id);
+        Err(Error::Wx(<WxError>::new(&reason)))
     }
 }
 
@@ -133,7 +145,7 @@ pub fn cap(m: Option<Match>) -> &str {
 pub fn str_to_latlon(input: &str, invert: bool) -> f32 {
     let sign = if invert { -1.0 } else { 1.0 };
     let mut value = input.parse::<f32>().unwrap();
-    // longitudes are inverted, and values over 100 drop the '1'
+    // longitudes are inverted, and values over 100 can drop the '1'
     if invert && value < 5000.0 {
         value += 10000.0;
     }

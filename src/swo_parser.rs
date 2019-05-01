@@ -1,5 +1,5 @@
 use super::domain::Product;
-use super::parser::{get_parse_error, Regexes};
+use super::parser::{get_parse_error, str_to_latlon, Regexes};
 use wx::domain::{
     Coordinates, Event, EventType, Location, MdConcerning, MesoscaleDiscussion, Outlook,
     OutlookRisk, SwoType,
@@ -87,12 +87,16 @@ fn parse_md(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error>
         .wfos
         .captures(&text)
         .ok_or_else(|| get_parse_error(&text))?;
-    let poly = regexes
-        .poly
-        .captures(&text)
-        .ok_or_else(|| get_parse_error(&text))?;
+    let poly_captures = regexes.poly_condensed.captures_iter(&text);
 
-    let poly = build_poly(poly[1].to_string());
+    let mut poly: Vec<Coordinates> = vec![];
+    for latlon in poly_captures {
+        poly.push(Coordinates {
+            lat: str_to_latlon(&latlon[0][0..4], false),
+            lon: str_to_latlon(&latlon[0][4..8], true),
+        });
+    }
+
     let id = id[1].parse::<u16>()?;
     let watch_issuance_probability = if watch_issuance_probability.is_some() {
         Some(watch_issuance_probability.unwrap()[1].parse::<u16>()?)
@@ -143,6 +147,7 @@ fn parse_md(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error>
         wfo: None,
         point: None,
         poly: Some(poly),
+        county: None,
     });
 
     let event = Event {
@@ -156,7 +161,7 @@ fn parse_md(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error>
         md: Some(md),
         outlook: None,
         report: None,
-        text: Some(product.product_text.to_string()),
+        text: Some(text.to_string()),
         title,
         valid_ts: None,
         warning: None,
@@ -186,28 +191,6 @@ fn get_outlook_risk(text: &str) -> OutlookRisk {
     }
 }
 
-pub fn build_poly(watch_poly: String) -> Vec<Coordinates> {
-    let watch_poly = watch_poly.replace('\n', "").replace("            ", " ");
-    let watch_poly = watch_poly.trim();
-    let watch_poly: Vec<Coordinates> = watch_poly
-        .split(' ')
-        .map(ToString::to_string)
-        .map(|s| {
-            let lat = s[0..4].parse::<f32>().unwrap() / 100.0;
-            let mut lon = s[4..8].parse::<f32>().unwrap();
-
-            if lon < 5000.0 {
-                lon += 10000.0;
-            }
-
-            lon /= -100.0;
-
-            Coordinates { lat, lon }
-        })
-        .collect();
-    watch_poly
-}
-
 #[cfg(test)]
 mod tests {
     use super::super::test_util::get_product_from_file;
@@ -219,7 +202,7 @@ mod tests {
         let regexes = Regexes::new();
         let result = parse(&product, regexes).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1522773660000000,"event_type":"NwsSwo","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":null,"point":null,"poly":[{"lat":37.82,"lon":-87.69},{"lat":38.53,"lon":-87.76},{"lat":39.73,"lon":-87.06},{"lat":40.62,"lon":-85.25},{"lat":40.46,"lon":-83.56},{"lat":40.36,"lon":-83.1},{"lat":40.12,"lon":-82.74},{"lat":39.65,"lon":-82.75},{"lat":39.24,"lon":-83.39},{"lat":38.8,"lon":-84.23},{"lat":38.2,"lon":-85.03},{"lat":37.81,"lon":-85.97},{"lat":37.73,"lon":-86.3},{"lat":37.64,"lon":-87.21},{"lat":37.82,"lon":-87.69}]},"md":{"id":205,"affected":"Central and southern Indiana...far northern Kentucky...western Ohio","concerning":"NewTorWatch","watch_issuance_probability":95,"wfos":["ILN","LMK","IWX","IND","PAH","ILX"]},"outlook":null,"report":null,"text":"\n504 \nACUS11 KWNS 031641\nSWOMCD\nSPC MCD 031641 \nOHZ000-KYZ000-INZ000-ILZ000-031915-\n\nMesoscale Discussion 0205\nNWS Storm Prediction Center Norman OK\n1141 AM CDT Tue Apr 03 2018\n\nAreas affected...Central and southern Indiana...far northern\nKentucky...western Ohio\n\nConcerning...Severe potential...Tornado Watch likely \n\nValid 031641Z - 031915Z\n\nProbability of Watch Issuance...95 percent\n\nSUMMARY...Storms are expected to increase in intensity this\nafternoon with a few tornadoes possible along with large hail.\nAdditional severe storms are likely later this evening.\n\nDISCUSSION...Scattered storms persist from southern IL across\ncentral IN and into OH along and north of a warm front. This\nboundary will gradually shift northward due to boundary layer\nheating/mixing to the south and strengthening warm air advection via\na backing 50-60 kt low-level jet. While some of the activity is\ncurrently elevated, a transition may occur in a few hours allowing\nstorms along the warm front to become supercells and/or bows.\nAdditional storms may also form south of the warm front as the air\nmass continues to destabilize, most likely across southern IN, far\nnorthern KY, and southwest OH. Wind profiles will become\nincreasingly favorable for supercells and tornadoes throughout the\nday as the low deepens.\n\n..Jewell/Hart.. 04/03/2018\n\n...Please see www.spc.noaa.gov for graphic product...\n\nATTN...WFO...ILN...LMK...IWX...IND...PAH...ILX...\n\nLAT...LON   37828769 38538776 39738706 40628525 40468356 40368310\n            40128274 39658275 39248339 38808423 38208503 37818597\n            37738630 37648721 37828769 \n\n\n","title":"SPC MD: Tornado Watch 95%","valid_ts":null,"warning":null,"watch":null}"#;
+        let expected = r#"{"event_ts":1522773660000000,"event_type":"NwsSwo","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":null,"point":null,"poly":[{"lat":37.82,"lon":-87.69},{"lat":38.53,"lon":-87.76},{"lat":39.73,"lon":-87.06},{"lat":40.62,"lon":-85.25},{"lat":40.46,"lon":-83.56},{"lat":40.36,"lon":-83.1},{"lat":40.12,"lon":-82.74},{"lat":39.65,"lon":-82.75},{"lat":39.24,"lon":-83.39},{"lat":38.8,"lon":-84.23},{"lat":38.2,"lon":-85.03},{"lat":37.81,"lon":-85.97},{"lat":37.73,"lon":-86.3},{"lat":37.64,"lon":-87.21},{"lat":37.82,"lon":-87.69}],"county":null},"md":{"id":205,"affected":"Central and southern Indiana...far northern Kentucky...western Ohio","concerning":"NewTorWatch","watch_issuance_probability":95,"wfos":["ILN","LMK","IWX","IND","PAH","ILX"]},"outlook":null,"report":null,"text":"\n504 \nACUS11 KWNS 031641\nSWOMCD\nSPC MCD 031641 \nOHZ000-KYZ000-INZ000-ILZ000-031915-\n\nMesoscale Discussion 0205\nNWS Storm Prediction Center Norman OK\n1141 AM CDT Tue Apr 03 2018\n\nAreas affected...Central and southern Indiana...far northern\nKentucky...western Ohio\n\nConcerning...Severe potential...Tornado Watch likely \n\nValid 031641Z - 031915Z\n\nProbability of Watch Issuance...95 percent\n\nSUMMARY...Storms are expected to increase in intensity this\nafternoon with a few tornadoes possible along with large hail.\nAdditional severe storms are likely later this evening.\n\nDISCUSSION...Scattered storms persist from southern IL across\ncentral IN and into OH along and north of a warm front. This\nboundary will gradually shift northward due to boundary layer\nheating/mixing to the south and strengthening warm air advection via\na backing 50-60 kt low-level jet. While some of the activity is\ncurrently elevated, a transition may occur in a few hours allowing\nstorms along the warm front to become supercells and/or bows.\nAdditional storms may also form south of the warm front as the air\nmass continues to destabilize, most likely across southern IN, far\nnorthern KY, and southwest OH. Wind profiles will become\nincreasingly favorable for supercells and tornadoes throughout the\nday as the low deepens.\n\n..Jewell/Hart.. 04/03/2018\n\n...Please see www.spc.noaa.gov for graphic product...\n\nATTN...WFO...ILN...LMK...IWX...IND...PAH...ILX...\n\nLAT...LON   37828769 38538776 39738706 40628525 40468356 40368310\n            40128274 39658275 39248339 38808423 38208503 37818597\n            37738630 37648721 37828769 \n\n\n","title":"SPC MD: Tornado Watch 95%","valid_ts":null,"warning":null,"watch":null}"#;
         assert_eq!(expected, serialized_result);
     }
 
@@ -229,7 +212,7 @@ mod tests {
         let regexes = Regexes::new();
         let result = parse(&product, regexes).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1522276380000000,"event_type":"NwsSwo","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":null,"point":null,"poly":[{"lat":33.18,"lon":-90.84},{"lat":34.13,"lon":-90.08},{"lat":34.49,"lon":-89.33},{"lat":34.07,"lon":-88.56},{"lat":32.91,"lon":-89.41},{"lat":32.2,"lon":-90.65},{"lat":31.66,"lon":-91.55},{"lat":31.71,"lon":-91.86},{"lat":32.45,"lon":-91.21},{"lat":33.18,"lon":-100.84}]},"md":{"id":190,"affected":"West central through north central Mississippi and adjacent portions of Arkansas/Louisiana","concerning":"ExistingTorWatch","watch_issuance_probability":null,"wfos":["MEG","JAN"]},"outlook":null,"report":null,"text":"\n205 \nACUS11 KWNS 282233\nSWOMCD\nSPC MCD 282232 \nMSZ000-LAZ000-290030-\n\nMesoscale Discussion 0190\nNWS Storm Prediction Center Norman OK\n0532 PM CDT Wed Mar 28 2018\n\nAreas affected...West central through north central Mississippi and\nadjacent portions of Arkansas/Louisiana\n\nConcerning...Tornado Watch 23...\n\nValid 282232Z - 290030Z\n\nThe severe weather threat for Tornado Watch 23 continues.\n\nSUMMARY...A risk for thunderstorm activity capable of producing\ndamaging wind gusts and a couple of tornadoes will gradually spread\nacross and northeast of the Vicksburg MS area, toward Greenwood and\nTupelo, through 7-9 PM CDT.\n\nDISCUSSION...The risk for severe weather will gradually increase\nacross west central into north central Mississippi through the\n00-02Z time frame.  This will largely occur in association with the\nnortheastward migration of a weak wave along an effective warm\nfrontal zone/zone of enhanced low-level convergence.  Strengthening\nof southerly 850 mb flow to 40-50 kt appears likely to accompany\nthis feature.  This will contribute to enlarging low-level\nhodographs along the boundary, supportive of supercell structures\nwith a risk for potentially damaging wind gusts and perhaps a couple\nof tornadoes.  Northeast of the Vicksburg area, thermodynamic\nprofiles/instability still appears somewhat marginal, but this may\nchange during the next couple of hours with continued low-level\nmoistening.\n\n..Kerr.. 03/28/2018\n\n...Please see www.spc.noaa.gov for graphic product...\n\nATTN...WFO...MEG...JAN...\n\nLAT...LON   33189084 34139008 34498933 34078856 32918941 32209065\n            31669155 31719186 32459121 33180084 \n\n\n","title":"SPC MD: Existing Tornado Watch","valid_ts":null,"warning":null,"watch":null}"#;
+        let expected = r#"{"event_ts":1522276380000000,"event_type":"NwsSwo","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":{"wfo":null,"point":null,"poly":[{"lat":33.18,"lon":-90.84},{"lat":34.13,"lon":-90.08},{"lat":34.49,"lon":-89.33},{"lat":34.07,"lon":-88.56},{"lat":32.91,"lon":-89.41},{"lat":32.2,"lon":-90.65},{"lat":31.66,"lon":-91.55},{"lat":31.71,"lon":-91.86},{"lat":32.45,"lon":-91.21},{"lat":33.18,"lon":-100.84}],"county":null},"md":{"id":190,"affected":"West central through north central Mississippi and adjacent portions of Arkansas/Louisiana","concerning":"ExistingTorWatch","watch_issuance_probability":null,"wfos":["MEG","JAN"]},"outlook":null,"report":null,"text":"\n205 \nACUS11 KWNS 282233\nSWOMCD\nSPC MCD 282232 \nMSZ000-LAZ000-290030-\n\nMesoscale Discussion 0190\nNWS Storm Prediction Center Norman OK\n0532 PM CDT Wed Mar 28 2018\n\nAreas affected...West central through north central Mississippi and\nadjacent portions of Arkansas/Louisiana\n\nConcerning...Tornado Watch 23...\n\nValid 282232Z - 290030Z\n\nThe severe weather threat for Tornado Watch 23 continues.\n\nSUMMARY...A risk for thunderstorm activity capable of producing\ndamaging wind gusts and a couple of tornadoes will gradually spread\nacross and northeast of the Vicksburg MS area, toward Greenwood and\nTupelo, through 7-9 PM CDT.\n\nDISCUSSION...The risk for severe weather will gradually increase\nacross west central into north central Mississippi through the\n00-02Z time frame.  This will largely occur in association with the\nnortheastward migration of a weak wave along an effective warm\nfrontal zone/zone of enhanced low-level convergence.  Strengthening\nof southerly 850 mb flow to 40-50 kt appears likely to accompany\nthis feature.  This will contribute to enlarging low-level\nhodographs along the boundary, supportive of supercell structures\nwith a risk for potentially damaging wind gusts and perhaps a couple\nof tornadoes.  Northeast of the Vicksburg area, thermodynamic\nprofiles/instability still appears somewhat marginal, but this may\nchange during the next couple of hours with continued low-level\nmoistening.\n\n..Kerr.. 03/28/2018\n\n...Please see www.spc.noaa.gov for graphic product...\n\nATTN...WFO...MEG...JAN...\n\nLAT...LON   33189084 34139008 34498933 34078856 32918941 32209065\n            31669155 31719186 32459121 33180084 \n\n\n","title":"SPC MD: Existing Tornado Watch","valid_ts":null,"warning":null,"watch":null}"#;
         assert_eq!(expected, serialized_result);
     }
 
@@ -258,48 +241,7 @@ mod tests {
         let product = get_product_from_file("data/products/swo-day2-no-severe");
         let regexes = Regexes::new();
         let result = parse(&product, regexes);
-        assert!(result.is_err());
-    }
-
-    #[test]
-    fn build_poly_with_spaces_and_breaks() {
-        let input = " 40468356 40368310\n            40128274 ".to_string();
-        let result = build_poly(input);
-        let expected = vec![
-            Coordinates {
-                lat: 40.46,
-                lon: -83.56,
-            },
-            Coordinates {
-                lat: 40.36,
-                lon: -83.1,
-            },
-            Coordinates {
-                lat: 40.12,
-                lon: -82.74,
-            },
-        ];
-        assert_eq!(expected, result);
-    }
-
-    #[test]
-    fn build_poly_with_lon_greater_than_100() {
-        let input = "40468356 40368310 40120274".to_string();
-        let result = build_poly(input);
-        let expected = vec![
-            Coordinates {
-                lat: 40.46,
-                lon: -83.56,
-            },
-            Coordinates {
-                lat: 40.36,
-                lon: -83.1,
-            },
-            Coordinates {
-                lat: 40.12,
-                lon: -102.74,
-            },
-        ];
-        assert_eq!(expected, result);
+        assert!(result.is_ok());
+        assert!(result.unwrap().is_none());
     }
 }
