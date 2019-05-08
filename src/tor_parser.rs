@@ -141,4 +141,12 @@ mod tests {
         let result = parse(&product, regexes);
         assert!(result.is_ok());
     }
+
+    #[test]
+    fn parse_tor_with_long_source() {
+        let product = get_product_from_file("data/products/tor-long-source");
+        let regexes = Regexes::new();
+        let result = parse(&product, regexes);
+        assert!(result.is_ok());
+    }
 }

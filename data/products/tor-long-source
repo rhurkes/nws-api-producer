@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/6616c463-de71-4183-b57c-39730641b5b4",
+    "id": "6616c463-de71-4183-b57c-39730641b5b4",
+    "wmoCollectiveId": "WFUS55",
+    "issuingOffice": "KCYS",
+    "issuanceTime": "2019-05-06T22:23:00+00:00",
+    "productCode": "TOR",
+    "productName": "Tornado Warning",
+    "productText": "\n000\nWFUS55 KCYS 062223\nTORCYS\nWYC021-062245-\n/O.NEW.KCYS.TO.W.0004.190506T2223Z-190506T2245Z/\n\nBULLETIN - EAS ACTIVATION REQUESTED\nTornado Warning\nNational Weather Service Cheyenne WY\n423 PM MDT Mon May 6 2019\n\nThe National Weather Service in Cheyenne has issued a\n\n* Tornado Warning for...\n  Southeastern Laramie County in southeastern Wyoming...\n\n* Until 445 PM MDT.\n\n* At 422 PM MDT, a confirmed tornado was located near Hillsdale, or\n  10 miles northeast of Cheyenne, moving southeast at 15 mph.\n\n  HAZARD...Damaging tornado and quarter size hail.\n\n  SOURCE...Public confirmed tornado. At 4 PM, the public reported a \n           tornado on the ground east of Ranchettes. \n\n  IMPACT...Flying debris will be dangerous to those caught without \n           shelter. Mobile homes will be damaged or destroyed. \n           Damage to roofs, windows, and vehicles will occur.  Tree \n           damage is likely.\n\n* The tornado will be near...\n  Hillsdale around 445 PM MDT.\n\nThis includes Interstate 80 in Wyoming between mile markers 371 and\n389.\n \nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nTo repeat, a tornado is on the ground. TAKE COVER NOW! Move to a\nbasement or an interior room on the lowest floor of a sturdy\nbuilding. Avoid windows. If you are outdoors, in a mobile home, or in\na vehicle, move to the closest substantial shelter and protect\nyourself from flying debris.\n\nTo report severe weather contact your nearest law enforcement agency.\nThey will send your report to the National Weather Service office in\nCheyenne.\n\n&&\n\nLAT...LON 4120 10471 4130 10465 4121 10425 4101 10443\nTIME...MOT...LOC 2222Z 298DEG 13KT 4121 10461 \n\nTORNADO...OBSERVED\nHAIL...1.00IN\n\n$$\n\nWorley\n"
+}
