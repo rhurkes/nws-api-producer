@@ -13,8 +13,7 @@ pub fn parse(product: &Product) -> Result<Option<Event>, Error> {
         event_ts,
         event_type: EventType::NwsAfd,
         expires_ts: None,
-        fetch_status: None,
-        image_uri: None,
+        ext_uri: None,
         ingest_ts: 0,
         location: None,
         md: None,
@@ -41,7 +40,7 @@ mod tests {
         product.product_text = "test data".to_string();
         let result = parse(&product).unwrap();
         let serialized_result = serde_json::to_string(&result).unwrap();
-        let expected = r#"{"event_ts":1523671620000000,"event_type":"NwsAfd","expires_ts":null,"fetch_status":null,"image_uri":null,"ingest_ts":0,"location":null,"md":null,"outlook":null,"report":null,"text":"test data","title":"Area Forecast Discussion (KMPX)","valid_ts":null,"warning":null,"watch":null}"#;
+        let expected = r#"{"event_ts":1523671620000000,"event_type":"NwsAfd","expires_ts":null,"ext_uri":null,"ingest_ts":0,"location":null,"md":null,"outlook":null,"report":null,"text":"test data","title":"Area Forecast Discussion (KMPX)","valid_ts":null,"warning":null,"watch":null}"#;
         assert_eq!(expected, serialized_result);
     }
 }
