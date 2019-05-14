@@ -31,7 +31,7 @@ pub struct Regexes {
 impl Regexes {
     pub fn new() -> Regexes {
         let movement_pattern = r"\ntime...mot...loc\s(?P<time>\d{4}z)\s(?P<deg>\d+)\D{3}\s(?P<kt>\d+)kt\s(?P<lat>\d{4})\s(?P<lon>\d{4,5})";
-        let source_pattern = r"\n{2}\s{2}source...(?P<src>.+)\.";
+        let source_pattern = r"\n{2}\s{2}source...(?P<src>[\s|\S]*?)\.";
         let valid_pattern = r"(\d{6}t\d{4}z)-(\d{6}t\d{4}z)";
         let affected_pattern = r"Areas affected\.{3}([\S|\s]*?)\n\n";
         let probability_pattern = r"Probability of Watch Issuance...(\d{1,3}) percent";
