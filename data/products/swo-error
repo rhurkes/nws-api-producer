@@ -1,0 +1,13 @@
+{
+    "@context": {
+        "@vocab": "https://api.weather.gov/ontology#"
+    },
+    "@id": "https://api.weather.gov/products/de118546-83b2-4d30-bfc0-19dbfab665b5",
+    "id": "de118546-83b2-4d30-bfc0-19dbfab665b5",
+    "wmoCollectiveId": "ACUS11",
+    "issuingOffice": "KWNS",
+    "issuanceTime": "2019-05-23T19:40:00+00:00",
+    "productCode": "SWO",
+    "productName": "Severe Storm Outlook Narrative (AC)",
+    "productText": "\n000\nACUS11 KWNS 231940\nSWOMCD\nSPC MCD 231939 \nWVZ000-KYZ000-OHZ000-INZ000-TNZ000-ILZ000-MOZ000-232115-\n\nMesoscale Discussion 0754\nNWS Storm Prediction Center Norman OK\n0239 PM CDT Thu May 23 2019\n\nAreas affected...Portions of the Ohio Valley\n\nConcerning...Severe potential...Watch possible \n\nValid 231939Z - 232115Z\n\nProbability of Watch Issuance...40 percent\n\nSUMMARY...Developing clusters of storms may pose a severe\nhail/damaging wind gust threat, watch possible for parts of the\narea.\n\nDISCUSSION...Regional satellite/radar shows a few clusters of\nmulticellular storms developing south of a stationary boundary\ndraped across parts of central Indiana/Illinois into\ncentral/southern Missouri. Along and south of the boundary, dew\npoints are in the low 70s F. Diabatic heating in the wake of\novernight/morning convective has allowed temperatures south of the\nboundary to warm into low to mid 80s F, resulting in modest\ndestabilization (MLCAPE 1500-2500 J/kg). Effective bulk shear of\n35-45 kt will help to maintain multicellular organization of\nconvection occurring in this region through peak heating. \n\nGiven the largely unidirectional shear profiles, severe hail and a\nfew damaging wind gusts are possible with these storms. At this\ntime, the most probable corridor of severe potential (i.e.,\noverlapping evolution of CAPE/shear combo) appears to be confined to\nthe eastern part of the MCD area, over portions of central/eastern\nKentucky, southern Ohio, and West Virginia (ahead of the ongoing\nconvective activity). Should storms here continue to organize and\nbecome more widespread, a watch may be needed.\n\n..Karstens/Hart.. 05/23/2019\n\n...Please see www.spc.noaa.gov for graphic product...\n\nATTN...WFO...RLX...JKL...ILN...LMK...OHX...IND...PAH...ILX...\nMEG...LSX...SGF...\n\nLAT...LON   38149066 37629121 36779094 36378826 37268560 37438427\n            37258259 38078192 39068254 39538389 39648594 38688754\n            38208905 38149066 \n\n"
+}

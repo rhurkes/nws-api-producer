@@ -35,7 +35,7 @@ impl Regexes {
         let valid_pattern = r"(\d{6}t\d{4}z)-(\d{6}t\d{4}z)";
         let affected_pattern = r"Areas affected\.{3}([\S|\s]*?)\n\n";
         let probability_pattern = r"Probability of Watch Issuance...(\d{1,3}) percent";
-        let wfos_pattern = r"ATTN...WFO...(.+)\n\n";
+        let wfos_pattern = r"ATTN...WFO...([\s|\S]*?)\n\n";
         let poly_pattern = r"(\d{4}\s\d{4,5})+";
         let poly_condensed_pattern = r"(\d{8})\s";
         let md_number_pattern = r"Mesoscale Discussion (\d{4})";

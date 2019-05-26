@@ -242,4 +242,12 @@ mod tests {
         assert!(result.is_ok());
         assert!(result.unwrap().is_none());
     }
+
+    #[test]
+    fn parse_swo_error() {
+        let product = get_product_from_file("data/products/swo-error");
+        let regexes = Regexes::new();
+        let result = parse(&product, regexes);
+        assert!(result.is_ok());
+    }
 }
