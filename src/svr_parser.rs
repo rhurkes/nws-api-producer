@@ -14,10 +14,9 @@ pub fn parse(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error
         .captures(&text)
         .ok_or_else(|| get_parse_error(&text))?;
     let poly_captures = regexes.poly.captures_iter(&text);
-    let source = regexes
+    let source_capture = regexes
         .source
-        .captures(&text)
-        .ok_or_else(|| get_parse_error(&text))?;
+        .captures(&text);
     let lat = str_to_latlon(cap(movement.name("lat")), false);
     let lon = str_to_latlon(cap(movement.name("lon")), true);
     let valid_range = regexes
@@ -60,13 +59,18 @@ pub fn parse(product: &Product, regexes: Regexes) -> Result<Option<Event>, Error
 
     let lower_case_text = text.to_lowercase();
 
+    let source = match source_capture {
+        Some(val) => Some(cap(val.name("src")).to_string()),
+        None => None,
+    };
+
     let warning = Some(Warning {
         is_pds: lower_case_text.contains("particularly dangerous situation"),
         was_observed: None,
         is_tor_emergency: None,
         motion_deg: Some(cap(movement.name("deg")).parse::<u16>()?),
         motion_kt: Some(cap(movement.name("kt")).parse::<u16>()?),
-        source: Some(cap(source.name("src")).to_string()),
+        source,
         issued_for,
         time: cap(movement.name("time")).to_string(),
     });
